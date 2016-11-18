@@ -17,16 +17,41 @@ public class Driver {
          *   7  6  5  4  3  2  1  0
          */
 
-        long bbPOne = 0b00000000_00000000_00000000_00010000_00001000_00000000_00000000_00000000L; //initial black stones
-        long bbPTwo = 0b00000000_00000000_00000000_00001000_00010000_00000000_00000000_00000000L; //initial white stones
+        long[] bitboards = {
+                0b00000000_00000000_00000000_00010000_00001000_00000000_00000000_00000000L, //initial black stones
+                0b00000000_00000000_00000000_00001000_00010000_00000000_00000000_00000000L //initial white stones
+        };
+        int turn = 0;
 
-        BitBoardHelper bbHelper = new BitBoardHelper();
         BitBoardOps bbOps = new BitBoardOps();
 
-        bbHelper.bbPrint(bbPOne,bbPTwo);
+        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
 
-        long moveOne = bbOps.generateMoves(bbPOne,bbPTwo);
+        long potMoves = bbOps.generateMoves(bitboards[0], bitboards[1]);
+        BitBoardHelper.bbPrint(potMoves, 0);
 
-        bbHelper.bbPrint(moveOne,0);
+        long moveOne = 0b00000000_00000000_00001000_00000000_00000000_00000000_00000000_00000000L;
+        bbOps.makeMove(moveOne, bitboards, turn);
+        turn++;
+
+        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+
+        long potMoves2 = bbOps.generateMoves(bitboards[1], bitboards[0]);
+        BitBoardHelper.bbPrint(0, potMoves2);
+
+        //long moveTwo = 0b00000000_00000000_00010000_00000000_00000000_00000000_00000000_00000000L;
+        long moveTwo = 0b00000000_00000000_00010000_00000000_00000000_00000000_00000000_00000000L;
+        bbOps.makeMove(moveTwo, bitboards, turn);
+        turn++;
+
+        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+
+
+        long moveThree = 0b00000000_00000000_00000000_00000000_00100000_00000000_00000000_00000000L;
+        bbOps.makeMove(moveThree, bitboards, turn);
+        turn++;
+
+        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+
     }
 }

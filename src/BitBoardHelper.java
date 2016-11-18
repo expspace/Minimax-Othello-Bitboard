@@ -3,7 +3,7 @@
  */
 public class BitBoardHelper {
 
-    public void bbPrint(long bbPOne, long bbPTwo) {
+    public static void bbPrint(long bbPOne, long bbPTwo) {
         StringBuilder sb = new StringBuilder();
         for (int i = 63; i >= 0; i--) {
             if (((bbPOne >> i) & 1) > 0) {
