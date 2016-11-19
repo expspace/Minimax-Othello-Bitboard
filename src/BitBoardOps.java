@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Created by NSPACE on 11/17/2016.
  */
@@ -53,10 +55,10 @@ public class BitBoardOps {
      * When a capture is possible further shifts and compares with non zero bit arrays occur.
      * Final check ensures move is an open square.
      *
-     * @returns bitboard representation of possible moves
+     * @returns array of long integer with single bit for each legal move
      */
 
-    public long generateMoves(long bbSelf, long bbEnemy) {
+    public long[] generateMoves(long bbSelf, long bbEnemy) {
         long moves = 0L;
         long open = ~(bbSelf | bbEnemy);
         long captured;
@@ -118,7 +120,60 @@ public class BitBoardOps {
         }
         moves |= shiftSE(captured) & open;
 
-        return moves;
+
+        return toBitMoveArray(moves);
+    }
+
+    /**
+     * Converts bitboard representation of all possible legal moves to an array
+     * of a single bit long integers representing a single move
+     *
+     * @param moves long bitboard representation of all possible legal moves moves
+     * @return array of single bit long integers representing a single move
+     */
+
+    public long[] toBitMoveArray(long moves) {
+        int moveIndex = 0;
+        long[] bitMoveArray = new long[Long.bitCount(moves)];
+
+        for (int i = 0; i < 64; i++) {
+            if (((moves >> i) & 1) == 1) {
+                bitMoveArray[moveIndex] = 1L << i;
+                moveIndex++;
+            }
+        }
+
+        return bitMoveArray;
+    }
+
+    /**
+     * greedy heuristic
+     */
+
+    public long getMaxDiskMove(long bbSelf, long bbEnemy,int turn) {
+        //gen
+        long[] bitMoveArray = generateMoves(bbSelf, bbEnemy);
+
+        ArrayList<long[]> childBitBoards = new ArrayList<>();
+
+        //make
+        for (int i = 0; i < bitMoveArray.length; i++) {
+            childBitBoards.add(makeMove(bitMoveArray[i], bbSelf, bbEnemy,turn));
+        }
+
+        //count return largest
+        int maxMoveIndex = 0;
+        int maxDiskCount = 0;
+
+        for (int i = 0; i < childBitBoards.size(); i++) {
+            long selfBoard = childBitBoards.get(i)[turn & 1];
+            if (Long.bitCount(selfBoard) > maxDiskCount) {
+                maxDiskCount = Long.bitCount(selfBoard);
+                maxMoveIndex = i;
+            }
+        }
+
+        return bitMoveArray[maxMoveIndex];
     }
 
 
@@ -127,106 +182,107 @@ public class BitBoardOps {
      * and compares to enemy bitboard. A check on self bitboard ensures existence of capping stone.
      * Assumes that the move provided is valid.
      *
-     * @param move      valid long integer with single bit representing move
-     * @param bitboards
-     * @param turn
+     * @return updated bitboards for both players
      */
 
     //TODO optimize make move
-    public void makeMove(long move, long[] bitboards, int turn) {
+    public long[] makeMove(long move, long bbSelf, long bbEnemy, int turn) {
         long captured;
-        int selfIndex, enemyIndex;
 
-        //decide which board is self board and which is enemy board
-        if (turn % 2 == 0) {
-            selfIndex = 0;
-            enemyIndex = 1;
-        } else {
-            selfIndex = 1;
-            enemyIndex = 0;
-        }
-
-        bitboards[selfIndex] |= move;
+        bbSelf |= move;
 
         //NORTH
-        captured = shiftN(move) & bitboards[enemyIndex];
+        captured = shiftN(move) & bbEnemy;
         for (int i = 0; i < 5; i++) {
-            captured |= shiftN(captured) & bitboards[enemyIndex];
+            captured |= shiftN(captured) & bbEnemy;
         }
-        if ((shiftN(captured) & bitboards[selfIndex]) > 0) {
-            bitboards[selfIndex] |= captured;
-            bitboards[enemyIndex] &= ~captured;
+        if ((shiftN(captured) & bbSelf) > 0) {
+            bbSelf |= captured;
+            bbEnemy &= ~captured;
         }
 
         //SOUTH
-        captured = shiftS(move) & bitboards[enemyIndex];
+        captured = shiftS(move) & bbEnemy;
         for (int i = 0; i < 5; i++) {
-            captured |= shiftS(captured) & bitboards[enemyIndex];
+            captured |= shiftS(captured) & bbEnemy;
         }
-        if ((shiftS(captured) & bitboards[selfIndex]) > 0) {
-            bitboards[selfIndex] |= captured;
-            bitboards[enemyIndex] &= ~captured;
+        if ((shiftS(captured) & bbSelf) > 0) {
+            bbSelf |= captured;
+            bbEnemy &= ~captured;
         }
 
         //WEST
-        captured = shiftW(move) & bitboards[enemyIndex];
+        captured = shiftW(move) & bbEnemy;
         for (int i = 0; i < 5; i++) {
-            captured |= shiftW(captured) & bitboards[enemyIndex];
+            captured |= shiftW(captured) & bbEnemy;
         }
-        if ((shiftW(captured) & bitboards[selfIndex]) > 0) {
-            bitboards[selfIndex] |= captured;
-            bitboards[enemyIndex] &= ~captured;
+        if ((shiftW(captured) & bbSelf) > 0) {
+            bbSelf |= captured;
+            bbEnemy &= ~captured;
         }
 
         //EAST
-        captured = shiftE(move) & bitboards[enemyIndex];
+        captured = shiftE(move) & bbEnemy;
         for (int i = 0; i < 5; i++) {
-            captured |= shiftE(captured) & bitboards[enemyIndex];
+            captured |= shiftE(captured) & bbEnemy;
         }
-        if ((shiftE(captured) & bitboards[selfIndex]) > 0) {
-            bitboards[selfIndex] |= captured;
-            bitboards[enemyIndex] &= ~captured;
+        if ((shiftE(captured) & bbSelf) > 0) {
+            bbSelf |= captured;
+            bbEnemy &= ~captured;
         }
 
         //NORTHWEST
-        captured = shiftNW(move) & bitboards[enemyIndex];
+        captured = shiftNW(move) & bbEnemy;
         for (int i = 0; i < 5; i++) {
-            captured |= shiftNW(captured) & bitboards[enemyIndex];
+            captured |= shiftNW(captured) & bbEnemy;
         }
-        if ((shiftNW(captured) & bitboards[selfIndex]) > 0) {
-            bitboards[selfIndex] |= captured;
-            bitboards[enemyIndex] &= ~captured;
+        if ((shiftNW(captured) & bbSelf) > 0) {
+            bbSelf |= captured;
+            bbEnemy &= ~captured;
         }
 
         //NORTHEAST
-        captured = shiftNE(move) & bitboards[enemyIndex];
+        captured = shiftNE(move) & bbEnemy;
         for (int i = 0; i < 5; i++) {
-            captured |= shiftNE(captured) & bitboards[enemyIndex];
+            captured |= shiftNE(captured) & bbEnemy;
         }
-        if ((shiftNE(captured) & bitboards[selfIndex]) > 0) {
-            bitboards[selfIndex] |= captured;
-            bitboards[enemyIndex] &= ~captured;
+        if ((shiftNE(captured) & bbSelf) > 0) {
+            bbSelf |= captured;
+            bbEnemy &= ~captured;
         }
 
         //SOUTHWEST
-        captured = shiftSW(move) & bitboards[enemyIndex];
+        captured = shiftSW(move) & bbEnemy;
         for (int i = 0; i < 5; i++) {
-            captured |= shiftSW(captured) & bitboards[enemyIndex];
+            captured |= shiftSW(captured) & bbEnemy;
         }
-        if ((shiftSW(captured) & bitboards[selfIndex]) > 0) {
-            bitboards[selfIndex] |= captured;
-            bitboards[enemyIndex] &= ~captured;
+        if ((shiftSW(captured) & bbSelf) > 0) {
+            bbSelf |= captured;
+            bbEnemy &= ~captured;
         }
 
         //SOUTHEAST
-        captured = shiftSE(move) & bitboards[enemyIndex];
+        captured = shiftSE(move) & bbEnemy;
         for (int i = 0; i < 5; i++) {
-            captured |= shiftSE(captured) & bitboards[enemyIndex];
+            captured |= shiftSE(captured) & bbEnemy;
         }
-        if ((shiftSE(captured) & bitboards[selfIndex]) > 0) {
-            bitboards[selfIndex] |= captured;
-            bitboards[enemyIndex] &= ~captured;
+        if ((shiftSE(captured) & bbSelf) > 0) {
+            bbSelf |= captured;
+            bbEnemy &= ~captured;
         }
+
+        long[] updatedBitboards = new long[2];
+
+        if (turn % 2 == 0) {
+            updatedBitboards[0] = bbSelf;
+            updatedBitboards[1] = bbEnemy;
+        } else {
+            updatedBitboards[0] = bbEnemy;
+            updatedBitboards[1] = bbSelf;
+        }
+        
+        return updatedBitboards;
+
     }
 
     public boolean gameOver(long bbPOne, long bbPTwo, long movesPOne, long movesPTwo) {
@@ -234,10 +290,4 @@ public class BitBoardOps {
                 (movesPOne + movesPTwo == 0) ||    // Neither player has any moves available.
                 (bbPOne == 0 || bbPTwo == 0);      // One player has had all chips eliminated.
     }
-
-    public int getBitCount(long bb) {
-        return Long.bitCount(bb);
-    }
-
-
 }
