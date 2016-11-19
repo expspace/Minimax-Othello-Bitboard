@@ -20,4 +20,19 @@ public class BitBoardHelper {
         }
         System.out.println(sb);
     }
+
+    public static void printWinner(long bbPOne, long bbPtwo) {
+        System.out.println("GAMEOVER");
+        if(Long.bitCount(bbPOne) > Long.bitCount(bbPtwo)) {
+            System.out.println("PLAYER ONE (BLACK) - WINS");
+        } else if (Long.bitCount(bbPOne) < Long.bitCount(bbPtwo) ){
+            System.out.println("PLAYER TWO (WHITE) - WINS");
+        } else {
+            System.out.println("DRAW");
+        }
+        System.out.println("Black disk count: " + Long.bitCount(bbPOne));
+        System.out.println("White disk count: " + Long.bitCount(bbPtwo));
+    }
+
+    //TODO adapter/converter for input
 }

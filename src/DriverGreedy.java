@@ -12,10 +12,12 @@ public class DriverGreedy {
                 0b00000000_00000000_00000000_00010000_00001000_00000000_00000000_00000000L, //initial black stones
                 0b00000000_00000000_00000000_00001000_00010000_00000000_00000000_00000000L //initial white stones
         };
+
         int turn = 0;
+        int numMovesPOne = 4;
+        int numMovesPTwo = 4;
 
         BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
-
         BitBoardOps bbOps = new BitBoardOps();
 
         do {
@@ -23,28 +25,30 @@ public class DriverGreedy {
 
             if(turn % 2 == 0) {
                 System.out.println("BLACKS TURN");
-                int numMoves = bbOps.generateMoves(bitboards[0], bitboards[1]).length;
-                System.out.println("NUM MOVES: " + numMoves);
+                long moves = bbOps.generateMoves(bitboards[0], bitboards[1]);
+                numMovesPOne = Long.bitCount(moves);
+                System.out.println("NUM MOVES: " + numMovesPOne);
                 System.out.println("CHOOSES MOVE: ");
-                long move = bbOps.getMaxDiskMove(bitboards[0], bitboards[1],turn);
-                bitboards = bbOps.makeMove(move, bitboards[0], bitboards[1],turn);
+                long greedyMove = bbOps.getMaxDiskMove(bitboards[0], bitboards[1],turn);
+                bitboards = bbOps.makeMove(greedyMove, bitboards[0], bitboards[1],turn);
                 BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
 
             } else {
                 System.out.println("WHITES TURN");
-                int numMoves = bbOps.generateMoves(bitboards[1], bitboards[0]).length;
-                System.out.println("NUM MOVES: " + numMoves);
+                long moves = bbOps.generateMoves(bitboards[1], bitboards[0]);
+                numMovesPTwo = Long.bitCount(moves);
+                System.out.println("NUM MOVES: " + numMovesPTwo);
                 System.out.println("CHOOSES MOVE: ");
-                long move = bbOps.getMaxDiskMove(bitboards[1], bitboards[0],turn);
-                bitboards = bbOps.makeMove(move, bitboards[1], bitboards[0],turn);
+                long greedyMove = bbOps.getMaxDiskMove(bitboards[1], bitboards[0],turn);
+                bitboards = bbOps.makeMove(greedyMove, bitboards[1], bitboards[0],turn);
                 BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
-
             }
 
             turn++;
-
             kb.nextInt(); //pauses iteration
-        } while(true);
 
+        } while(!bbOps.gameOver(bitboards[0],bitboards[1],numMovesPOne,numMovesPTwo));
+
+        BitBoardHelper.printWinner(bitboards[0],bitboards[1]);
     }
 }

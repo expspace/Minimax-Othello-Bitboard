@@ -9,6 +9,9 @@ public class DriverMoves {
         /**
          * othello bitboard encoding - https://github.com/denkspuren/BitboardC4/blob/master/BitboardDesign.md
          *
+         * bitboard[0] - player one (black) bitboard
+         * bitboard[1] - player two (white) bitboard
+         *
          *  63 62 61 60 59 58 57 56
          *  55 54 53 52 51 50 49 48
          *  47 46 45 44 43 42 41 40
@@ -30,7 +33,8 @@ public class DriverMoves {
 
         BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
 
-        long[] potMoves = bbOps.generateMoves(bitboards[0], bitboards[1]);
+        long moves = bbOps.generateMoves(bitboards[0], bitboards[1]);
+        long[] potMoves = bbOps.toBitMoveArray(moves);
         System.out.println("POSSIBLE MOVES");
         System.out.println("--------------");
         for(long move : potMoves) {
@@ -45,7 +49,9 @@ public class DriverMoves {
 
         BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
 
-        long[] potMoves2 = bbOps.generateMoves(bitboards[1], bitboards[0]);
+        moves = bbOps.generateMoves(bitboards[1], bitboards[0]);
+        long[] potMoves2 = bbOps.toBitMoveArray(moves);
+
         System.out.println("POSSIBLE MOVES");
         System.out.println("--------------");
         for(long move : potMoves2) {

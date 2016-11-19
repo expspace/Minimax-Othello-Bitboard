@@ -11,8 +11,6 @@ public class BitBoardOps {
     private static final long MASK_E = 0b11111110_11111110_11111110_11111110_11111110_11111110_11111110_11111110L;
     private static final long MASK_W = 0b01111111_01111111_01111111_01111111_01111111_01111111_01111111_01111111L;
 
-    private static final long MASK_FULL = 0b11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111L;
-
     /**
      * Methods to shifts a players in one of the 8 possible directions (N,S,E,W,NW,NE,SW,SE)
      */
@@ -58,7 +56,7 @@ public class BitBoardOps {
      * @returns array of long integer with single bit for each legal move
      */
 
-    public long[] generateMoves(long bbSelf, long bbEnemy) {
+    public long generateMoves(long bbSelf, long bbEnemy) {
         long moves = 0L;
         long open = ~(bbSelf | bbEnemy);
         long captured;
@@ -121,7 +119,7 @@ public class BitBoardOps {
         moves |= shiftSE(captured) & open;
 
 
-        return toBitMoveArray(moves);
+        return moves;
     }
 
     /**
@@ -145,37 +143,6 @@ public class BitBoardOps {
 
         return bitMoveArray;
     }
-
-    /**
-     * greedy heuristic
-     */
-
-    public long getMaxDiskMove(long bbSelf, long bbEnemy,int turn) {
-        //gen
-        long[] bitMoveArray = generateMoves(bbSelf, bbEnemy);
-
-        ArrayList<long[]> childBitBoards = new ArrayList<>();
-
-        //make
-        for (int i = 0; i < bitMoveArray.length; i++) {
-            childBitBoards.add(makeMove(bitMoveArray[i], bbSelf, bbEnemy,turn));
-        }
-
-        //count return largest
-        int maxMoveIndex = 0;
-        int maxDiskCount = 0;
-
-        for (int i = 0; i < childBitBoards.size(); i++) {
-            long selfBoard = childBitBoards.get(i)[turn & 1];
-            if (Long.bitCount(selfBoard) > maxDiskCount) {
-                maxDiskCount = Long.bitCount(selfBoard);
-                maxMoveIndex = i;
-            }
-        }
-
-        return bitMoveArray[maxMoveIndex];
-    }
-
 
     /**
      * Updates the players bitboard using given move and turn. Shifts provided move in each direction
@@ -280,14 +247,55 @@ public class BitBoardOps {
             updatedBitboards[0] = bbEnemy;
             updatedBitboards[1] = bbSelf;
         }
-        
-        return updatedBitboards;
 
+        return updatedBitboards;
     }
 
-    public boolean gameOver(long bbPOne, long bbPTwo, long movesPOne, long movesPTwo) {
-        return ((bbPOne | bbPTwo) == MASK_FULL) || // All squares are occupied.
-                (movesPOne + movesPTwo == 0) ||    // Neither player has any moves available.
-                (bbPOne == 0 || bbPTwo == 0);      // One player has had all chips eliminated.
+    /**
+     * Greedy heuristic which returns whatever move results in the largest number of disk
+     * gains.
+     *
+     * @return long bit integer representing a move with the most flipping outcome; 0 if no moves possible
+     */
+
+    public long getMaxDiskMove(long bbSelf, long bbEnemy, int turn) {
+        //generate all candidate moves
+        long moves = generateMoves(bbSelf, bbEnemy);
+        long[] bitMoveArray = toBitMoveArray(moves);
+
+        //exit if no moves can be made
+        if (moves == 0) {
+            return 0;
+        }
+
+        ArrayList<long[]> childBitBoards = new ArrayList<>();
+
+        //make all child bords given candidate moves
+        for (int i = 0; i < bitMoveArray.length; i++) {
+            childBitBoards.add(makeMove(bitMoveArray[i], bbSelf, bbEnemy, turn));
+        }
+
+        //count max number of disks accrued in each child board; return index
+        int maxMoveIndex = 0;
+        int maxDiskCount = 0;
+
+        for (int i = 0; i < childBitBoards.size(); i++) {
+            long selfBoard = childBitBoards.get(i)[turn & 1];
+            if (Long.bitCount(selfBoard) > maxDiskCount) {
+                maxDiskCount = Long.bitCount(selfBoard);
+                maxMoveIndex = i;
+            }
+        }
+        return bitMoveArray[maxMoveIndex];
+    }
+
+    /**
+     * Tests each of the three potential conditions for a game over
+     */
+
+    public boolean gameOver(long bbPOne, long bbPTwo, int numMovesPOne, int numMovesPTwo) {
+        return ((bbPOne | bbPTwo) == -1L) ||             // All squares are occupied.
+                (numMovesPOne + numMovesPTwo == 0) ||    // Neither player has any moves available.
+                (bbPOne == 0 || bbPTwo == 0);            // One player has had all chips eliminated.
     }
 }
