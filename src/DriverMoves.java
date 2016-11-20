@@ -73,7 +73,7 @@ public class DriverMoves {
 
         BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
 
-//        long moveThree = bbOps.getMaxDiskMove(bitboards[0], bitboards[1],turn);
+//        long moveThree = bbOps.makeMaxDiskMove(bitboards[0], bitboards[1],turn);
 //        bitboards = bbOps.makeMove(moveThree, bitboards[0], bitboards[1],turn);
 //        turn++;
 //

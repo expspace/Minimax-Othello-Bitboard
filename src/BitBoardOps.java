@@ -118,7 +118,6 @@ public class BitBoardOps {
         }
         moves |= shiftSE(captured) & open;
 
-
         return moves;
     }
 
@@ -238,55 +237,61 @@ public class BitBoardOps {
             bbEnemy &= ~captured;
         }
 
-        long[] updatedBitboards = new long[2];
-
         if (turn % 2 == 0) {
-            updatedBitboards[0] = bbSelf;
-            updatedBitboards[1] = bbEnemy;
+            return new long[]{bbSelf, bbEnemy};
         } else {
-            updatedBitboards[0] = bbEnemy;
-            updatedBitboards[1] = bbSelf;
+            return new long[]{bbEnemy, bbSelf};
         }
-
-        return updatedBitboards;
     }
 
     /**
      * Greedy heuristic which returns whatever move results in the largest number of disk
      * gains.
      *
-     * @return long bit integer representing a move with the most flipping outcome; 0 if no moves possible
+     * @return updated long bitboards after choosing a move with the most flipping outcome; same bitboard if no moves possible
      */
 
-    public long getMaxDiskMove(long bbSelf, long bbEnemy, int turn) {
+    public long[] makeMaxDiskMove(long bbSelf, long bbEnemy, int turn) {
+
+        ArrayList<long[]> childBitBoards = getChildBitboards(bbSelf, bbEnemy, turn);
+
+        //return same board and exit if no moves can be made
+        if (childBitBoards.size() == 0) {
+            if (turn % 2 == 0) {
+                return new long[]{bbSelf, bbEnemy};
+            } else {
+                return new long[]{bbEnemy, bbSelf};
+            }
+        }
+
+        long[] maxBitBoard = new long[2];
+        int maxDiskCount = 0;
+
+        //count max number of disks accrued in each child board; return largest updated one
+        for(long[] childBitBoard : childBitBoards) {
+            long selfBoard = childBitBoard[turn & 1];
+            if (Long.bitCount(selfBoard) > maxDiskCount) {
+                maxDiskCount = Long.bitCount(selfBoard);
+                maxBitBoard = childBitBoard;
+            }
+        }
+
+        return maxBitBoard;
+    }
+
+    public ArrayList<long[]> getChildBitboards(long bbSelf, long bbEnemy, int turn) {
+        ArrayList<long[]> childBitBoards = new ArrayList<>();
+
         //generate all candidate moves
         long moves = generateMoves(bbSelf, bbEnemy);
         long[] bitMoveArray = toBitMoveArray(moves);
 
-        //exit if no moves can be made
-        if (moves == 0) {
-            return 0;
-        }
-
-        ArrayList<long[]> childBitBoards = new ArrayList<>();
-
-        //make all child bords given candidate moves
+        //make all child boards given candidate moves
         for (int i = 0; i < bitMoveArray.length; i++) {
             childBitBoards.add(makeMove(bitMoveArray[i], bbSelf, bbEnemy, turn));
         }
 
-        //count max number of disks accrued in each child board; return index
-        int maxMoveIndex = 0;
-        int maxDiskCount = 0;
-
-        for (int i = 0; i < childBitBoards.size(); i++) {
-            long selfBoard = childBitBoards.get(i)[turn & 1];
-            if (Long.bitCount(selfBoard) > maxDiskCount) {
-                maxDiskCount = Long.bitCount(selfBoard);
-                maxMoveIndex = i;
-            }
-        }
-        return bitMoveArray[maxMoveIndex];
+        return childBitBoards;
     }
 
     /**
@@ -297,5 +302,24 @@ public class BitBoardOps {
         return ((bbPOne | bbPTwo) == -1L) ||             // All squares are occupied.
                 (numMovesPOne + numMovesPTwo == 0) ||    // Neither player has any moves available.
                 (bbPOne == 0 || bbPTwo == 0);            // One player has had all chips eliminated.
+    }
+
+    /**
+     * Mobility heuristic which returns difference between number of self moves and number
+     * of enemy moves.
+     */
+
+    public int mobilityEvalFunc(long bbSelf, long bbEnemy) {
+        return Long.bitCount(generateMoves(bbSelf, bbEnemy)) - Long.bitCount(generateMoves(bbEnemy, bbSelf));
+    }
+
+    /**
+     * static evaluation table used : http://www.samsoft.org.uk/reversi/strategy.htm#position
+     * <p>
+     * Crude.
+     */
+    public int positionalEvalFunc(long bbSelf, long bbEnemy) {
+        //TODO
+        return 0;
     }
 }
