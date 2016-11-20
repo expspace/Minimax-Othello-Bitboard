@@ -17,9 +17,9 @@ public class DriverPositional {
                 0b00000000_00000000_00010000_00011000_00111000_00000000_00000000_00000000L //initial white stones
         };
 
-        BitBoardOps bbOps = new BitBoardOps();
+        EvaluationFunction positionalEvaluator = new positionalEvaluator();
 
-        int posEvaluationVal = bbOps.positionalEvalFunc(bitboards[1],bitboards[0]);
+        int posEvaluationVal = positionalEvaluator.evaluateBoard(bitboards[1],bitboards[0]);
 
         System.out.println(posEvaluationVal); //assert 4
 
