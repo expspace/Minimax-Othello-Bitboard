@@ -297,7 +297,7 @@ public class BitBoardOps {
     /**
      * Tests each of the three potential conditions for a game over
      */
-
+    //TODO
     public boolean gameOver(long bbPOne, long bbPTwo, int numMovesPOne, int numMovesPTwo) {
         return ((bbPOne | bbPTwo) == -1L) ||             // All squares are occupied.
                 (numMovesPOne + numMovesPTwo == 0) ||    // Neither player has any moves available.
@@ -305,16 +305,20 @@ public class BitBoardOps {
     }
 
     public static final int POS_INFINITY_WIN = Integer.MAX_VALUE;
-    public static final int POS_INFINITY = Integer.MAX_VALUE - 1;
+    public static final int POS_INFINITY_INIT = Integer.MAX_VALUE - 1;
 
     public static final int NEG_INFINITY_LOSS = Integer.MIN_VALUE;
-    public static final int NEG_INFINITY = Integer.MIN_VALUE + 1;
-    public int depth = 3; //actual depth is +1 since we are running minimax at child nodes
+    public static final int NEG_INFINITY_INIT = Integer.MIN_VALUE + 1;
 
-    //TODO
+    public static int SEARCH_DEPTH = 10;
+    public static long NODE_COUNT = 0; //printing purposes
+
+    EvaluationFunction evaluationFunction = new randomEvaluator();
+
     public long[] makeMinimaxMove(long bbSelf, long bbEnemy, int turn) {
         //get child boards
         ArrayList<long[]> childBoardList = getChildBitboards(bbSelf, bbEnemy, turn);
+        NODE_COUNT += childBoardList.size();
 
         //return same board and exit if no moves can be made
         if (childBoardList.size() == 0) {
@@ -326,15 +330,24 @@ public class BitBoardOps {
         }
 
         long[] updatedBoard = new long[2]; //board that will result from minimax based action
-        int maxValue = NEG_INFINITY;
+        int maxValue = NEG_INFINITY_INIT;
 
         //run minimax maxPlayer = false on children keep largest score board
         for(long[] childBoard : childBoardList) {
-            int value = minimax(childBoard,depth,false);
+            int value;
 
-            System.out.println("CHILD BOARD: ");
-            BitBoardHelper.bbPrint(childBoard[0],childBoard[1]);
-            System.out.println("child board minimax value: " + value);
+            //compute minimax at child board who is min player; self board alternates at child board
+            if(turn % 2 == 0) {
+                value = minimax(childBoard[1],childBoard[0], SEARCH_DEPTH - 1,false, turn + 1);
+            } else {
+                value = minimax(childBoard[0],childBoard[1], SEARCH_DEPTH - 1,false, turn + 1);
+            }
+
+
+//            System.out.println("CHILD BOARD: ");
+//            System.out.println("child board minimax value: " + value);
+//            BitBoardHelper.bbPrint(childBoard[0],childBoard[1]);
+
 
             if(value > maxValue) {
                 updatedBoard = childBoard;
@@ -342,40 +355,47 @@ public class BitBoardOps {
             }
         }
 
-        System.out.println("maxValue" + maxValue);
+        System.out.println("maxValue " + maxValue);
         return updatedBoard;
     }
 
-    //TODO time diff node depth
-    //TODO evaluation funcs to interface
+    public int minimax(long bbSelf, long bbEnemy,int depth, boolean maxPlayer, int turn) {
 
-    public int minimax(long[] bitboards,int depth, boolean maxPlayer) {
-//        if(depth == 0 ) {
-//            return
-//        }
+        //handle maximum tree depth
+        if(depth == 0 ) {
+            return evaluationFunction.evaluateBoard(bbSelf,bbEnemy);
+        }
 
+        ArrayList<long[]> childBoardList = getChildBitboards(bbSelf,bbEnemy,turn);
+        NODE_COUNT += childBoardList.size();
 
+        //handle no moves node
+        if(childBoardList.size() == 0) {
+            if(gameOver(bbSelf,bbEnemy,1,1)) {    //reached terminal node
+                return maxPlayer? POS_INFINITY_WIN : NEG_INFINITY_LOSS;
+            } else {    //pass turn - continues minimax with unchanged board
+                return minimax(bbEnemy,bbSelf,depth - 1,!maxPlayer, turn + 1);
+            }
+        }
 
+        int selfBBIndex = turn % 2;
+        int enemyBBIndex = (turn + 1) % 2;
 
-
-//        01 function minimax(node, depth, maximizingPlayer)
-//        02     if depth = 0 or node is a terminal node
-//        03         return the heuristic value of node
-//
-//        04     if maximizingPlayer
-//        05         bestValue := −∞
-//        06         for each child of node
-//        07             v := minimax(child, depth − 1, FALSE)
-//        08             bestValue := max(bestValue, v)
-//        09         return bestValue
-//
-//        10     else    (* minimizing player *)
-//        11         bestValue := +∞
-//        12         for each child of node
-//        13             v := minimax(child, depth − 1, TRUE)
-//        14             bestValue := min(bestValue, v)
-//        15         return bestValue
-        return 0;
+        if(maxPlayer) {
+            int bestValue = NEG_INFINITY_INIT;
+            for(long[] childBoard : childBoardList) {
+                int value = minimax(childBoard[enemyBBIndex],childBoard[selfBBIndex],depth - 1, false, turn + 1);
+                bestValue = Math.max(bestValue,value);
+            }
+            return bestValue;
+        } else {    //minPlayer
+            int bestValue = POS_INFINITY_INIT;
+            for(long[] childBoard : childBoardList) {
+                int value = minimax(childBoard[enemyBBIndex],childBoard[selfBBIndex],depth - 1, true, turn + 1);
+                bestValue = Math.min(bestValue,value);
+            }
+            return bestValue;
+        }
     }
 
 }
