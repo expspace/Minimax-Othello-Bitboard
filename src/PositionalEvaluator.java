@@ -1,7 +1,7 @@
 /**
  * Created by NSPACE on 11/20/2016.
  */
-public class positionalEvaluator implements EvaluationFunction{
+public class PositionalEvaluator implements EvaluationFunction{
 
     /**
      * static evaluation table used is taken from reversi program that was included with past versions of Microsoft Windows

@@ -29,15 +29,15 @@ public class DriverMinimax {
         };
 
         int turn = 0;
-        BitBoardOps bbOps = new BitBoardOps();
-        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+        BoardOperations bbOps = new BoardOperations();
+        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
 
         //turn 1
         long moveOne = 0b00000000_00000000_00001000_00000000_00000000_00000000_00000000_00000000L;
         bitboards = bbOps.makeMove(moveOne, bitboards[0], bitboards[1],turn);
         turn++;
-        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
         System.out.println();
 
         //MINIMAX TEST
@@ -51,15 +51,15 @@ public class DriverMinimax {
         System.out.println("Estimated millisecond execution time: " + estimatedTime / 1000000.0);
 
         //print depth
-        System.out.println("Depth of minimax search: " + BitBoardOps.SEARCH_DEPTH);
+        System.out.println("Depth of minimax search: " + BoardOperations.SEARCH_DEPTH);
         //print #nodes generated
-        System.out.println("Number nodes generated: " + BitBoardOps.NODE_COUNT);
+        System.out.println("Number nodes generated: " + BoardOperations.NODE_COUNT);
 
 
 
         System.out.println("UPDATED BOARD: ");
         System.out.println();
-        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
 
 

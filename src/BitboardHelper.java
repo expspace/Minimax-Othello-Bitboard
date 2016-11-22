@@ -1,7 +1,7 @@
 /**
  * Created by NSPACE on 11/17/2016.
  */
-public class BitBoardHelper {
+public class BitboardHelper {
 
     public static void bbPrint(long bbPOne, long bbPTwo) {
         StringBuilder sb = new StringBuilder();
@@ -34,5 +34,5 @@ public class BitBoardHelper {
         System.out.println("White disk count: " + Long.bitCount(bbPtwo));
     }
 
-    //TODO adapter/converter for input
+    //TODO adapter/converter for input (array index to bitboard)
 }

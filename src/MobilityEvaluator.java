@@ -1,8 +1,12 @@
 /**
  * Created by NSPACE on 11/20/2016.
  */
-public class mobilityEvaluator implements EvaluationFunction{
-    BitBoardOps bbOps = new BitBoardOps();
+public class MobilityEvaluator implements EvaluationFunction{
+    BoardOperations bbOps;
+
+    public MobilityEvaluator(BoardOperations bbOps) {
+        this.bbOps = bbOps;
+    }
 
     /**
      * Mobility heuristic which returns the difference between the number of moves the current player

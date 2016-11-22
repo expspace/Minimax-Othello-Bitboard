@@ -17,8 +17,8 @@ public class DriverGreedy {
         int numMovesPOne = 4;
         int numMovesPTwo = 4;
 
-        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
-        BitBoardOps bbOps = new BitBoardOps();
+        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
+        BoardOperations bbOps = new BoardOperations();
 
         do {
             System.out.println("TURN: " + turn);
@@ -30,7 +30,7 @@ public class DriverGreedy {
                 System.out.println("NUM MOVES: " + numMovesPOne);
                 System.out.println("CHOOSES MOVE: ");
                 bitboards = bbOps.makeMaxDiskMove(bitboards[0], bitboards[1],turn);
-                BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+                BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
             } else {
                 System.out.println("WHITES TURN");
@@ -39,7 +39,7 @@ public class DriverGreedy {
                 System.out.println("NUM MOVES: " + numMovesPTwo);
                 System.out.println("CHOOSES MOVE: ");
                 bitboards = bbOps.makeMaxDiskMove(bitboards[1], bitboards[0],turn);
-                BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+                BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
             }
 
             turn++;
@@ -47,6 +47,6 @@ public class DriverGreedy {
 
         } while(!bbOps.gameOver(bitboards[0],bitboards[1],numMovesPOne,numMovesPTwo));
 
-        BitBoardHelper.printWinner(bitboards[0],bitboards[1]);
+        BitboardHelper.printWinner(bitboards[0],bitboards[1]);
     }
 }

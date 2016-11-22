@@ -29,16 +29,16 @@ public class DriverMoves {
 
         int turn = 0;
 
-        BitBoardOps bbOps = new BitBoardOps();
+        BoardOperations bbOps = new BoardOperations();
 
-        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
         long moves = bbOps.generateMoves(bitboards[0], bitboards[1]);
         long[] potMoves = bbOps.toBitMoveArray(moves);
         System.out.println("POSSIBLE MOVES");
         System.out.println("--------------");
         for(long move : potMoves) {
-            BitBoardHelper.bbPrint(move, 0);
+            BitboardHelper.bbPrint(move, 0);
         }
         System.out.println("--------------");
 
@@ -47,7 +47,7 @@ public class DriverMoves {
         bitboards = bbOps.makeMove(moveOne, bitboards[0], bitboards[1],turn);
         turn++;
 
-        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
         moves = bbOps.generateMoves(bitboards[1], bitboards[0]);
         long[] potMoves2 = bbOps.toBitMoveArray(moves);
@@ -55,7 +55,7 @@ public class DriverMoves {
         System.out.println("POSSIBLE MOVES");
         System.out.println("--------------");
         for(long move : potMoves2) {
-            BitBoardHelper.bbPrint(0, move);
+            BitboardHelper.bbPrint(0, move);
         }
         System.out.println("--------------");
 
@@ -64,20 +64,20 @@ public class DriverMoves {
         bitboards = bbOps.makeMove(moveTwo,bitboards[1], bitboards[0],turn);
         turn++;
 
-        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
 
         long moveThree = 0b00000000_00000000_00000000_00000000_00100000_00000000_00000000_00000000L;
         bitboards = bbOps.makeMove(moveThree, bitboards[0], bitboards[1],turn);
         turn++;
 
-        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
 //        long moveThree = bbOps.makeMaxDiskMove(bitboards[0], bitboards[1],turn);
 //        bitboards = bbOps.makeMove(moveThree, bitboards[0], bitboards[1],turn);
 //        turn++;
 //
-//        BitBoardHelper.bbPrint(bitboards[0], bitboards[1]);
+//        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
 
 

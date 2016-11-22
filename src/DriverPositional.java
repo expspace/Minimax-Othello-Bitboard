@@ -17,7 +17,7 @@ public class DriverPositional {
                 0b00000000_00000000_00010000_00011000_00111000_00000000_00000000_00000000L //initial white stones
         };
 
-        EvaluationFunction positionalEvaluator = new positionalEvaluator();
+        EvaluationFunction positionalEvaluator = new PositionalEvaluator();
 
         int posEvaluationVal = positionalEvaluator.evaluateBoard(bitboards[1],bitboards[0]);
 

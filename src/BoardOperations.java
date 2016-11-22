@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Created by NSPACE on 11/17/2016.
  */
-public class BitBoardOps {
+public class BoardOperations {
 
     /**
      * Masks for east and west shift are used to prevent bitboard wraparound
@@ -310,10 +310,14 @@ public class BitBoardOps {
     public static final int NEG_INFINITY_LOSS = Integer.MIN_VALUE;
     public static final int NEG_INFINITY_INIT = Integer.MIN_VALUE + 1;
 
-    public static int SEARCH_DEPTH = 10;
+    public static int SEARCH_DEPTH = 9;
     public static long NODE_COUNT = 0; //printing purposes
 
-    EvaluationFunction evaluationFunction = new positionalEvaluator();
+
+//    EvaluationFunction evaluationFunction = new RandomEvaluator();
+//    EvaluationFunction evaluationFunction = new PositionalEvaluator();
+    EvaluationFunction evaluationFunction = new MobilityEvaluator(this);
+
 
     public long[] makeMinimaxMove(long bbSelf, long bbEnemy, int turn) {
         //get child boards
@@ -346,7 +350,7 @@ public class BitBoardOps {
 
             System.out.println("CHILD BOARD: ");
             System.out.println("child board minimax value: " + value);
-            BitBoardHelper.bbPrint(childBoard[0],childBoard[1]);
+            BitboardHelper.bbPrint(childBoard[0],childBoard[1]);
 
 
             if(value > maxValue) {
