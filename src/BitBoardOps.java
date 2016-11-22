@@ -313,7 +313,7 @@ public class BitBoardOps {
     public static int SEARCH_DEPTH = 10;
     public static long NODE_COUNT = 0; //printing purposes
 
-    EvaluationFunction evaluationFunction = new randomEvaluator();
+    EvaluationFunction evaluationFunction = new positionalEvaluator();
 
     public long[] makeMinimaxMove(long bbSelf, long bbEnemy, int turn) {
         //get child boards
@@ -321,7 +321,7 @@ public class BitBoardOps {
         NODE_COUNT += childBoardList.size();
 
         //return same board and exit if no moves can be made
-        if (childBoardList.size() == 0) {
+        if (childBoardList.size() == 0) { //TODO turn++?
             if (turn % 2 == 0) {
                 return new long[]{bbSelf, bbEnemy};
             } else {
@@ -344,9 +344,9 @@ public class BitBoardOps {
             }
 
 
-//            System.out.println("CHILD BOARD: ");
-//            System.out.println("child board minimax value: " + value);
-//            BitBoardHelper.bbPrint(childBoard[0],childBoard[1]);
+            System.out.println("CHILD BOARD: ");
+            System.out.println("child board minimax value: " + value);
+            BitBoardHelper.bbPrint(childBoard[0],childBoard[1]);
 
 
             if(value > maxValue) {
@@ -363,7 +363,11 @@ public class BitBoardOps {
 
         //handle maximum tree depth
         if(depth == 0 ) {
-            return evaluationFunction.evaluateBoard(bbSelf,bbEnemy);
+            if(maxPlayer) {
+                return evaluationFunction.evaluateBoard(bbSelf,bbEnemy);
+            } else { //at a min player node the self board is the min players enemy board (confusing I know)
+                return evaluationFunction.evaluateBoard(bbEnemy,bbSelf);
+            }
         }
 
         ArrayList<long[]> childBoardList = getChildBitboards(bbSelf,bbEnemy,turn);
@@ -372,7 +376,7 @@ public class BitBoardOps {
         //handle no moves node
         if(childBoardList.size() == 0) {
             if(gameOver(bbSelf,bbEnemy,1,1)) {    //reached terminal node
-                return maxPlayer? POS_INFINITY_WIN : NEG_INFINITY_LOSS;
+                return maxPlayer? POS_INFINITY_WIN : NEG_INFINITY_LOSS; //TODO false check who wins
             } else {    //pass turn - continues minimax with unchanged board
                 return minimax(bbEnemy,bbSelf,depth - 1,!maxPlayer, turn + 1);
             }
