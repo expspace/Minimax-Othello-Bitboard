@@ -30,6 +30,8 @@ public class DriverMinimax {
 
         int turn = 0;
         BoardOperations bbOps = new BoardOperations();
+        Minimax minimax = new Minimax(bbOps,new RandomEvaluator());
+
         BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
 
@@ -45,15 +47,15 @@ public class DriverMinimax {
 
         long startTime = System.nanoTime();
 
-        bitboards = bbOps.makeMinimaxMove(bitboards[1], bitboards[0],turn);
+        bitboards = minimax.performNextMove(bitboards[1], bitboards[0],turn);
 
         long estimatedTime = System.nanoTime() - startTime;
         System.out.println("Estimated millisecond execution time: " + estimatedTime / 1000000.0);
 
         //print depth
-        System.out.println("Depth of minimax search: " + BoardOperations.SEARCH_DEPTH);
+        System.out.println("Depth of minimax search: " + Minimax.SEARCH_DEPTH);
         //print #nodes generated
-        System.out.println("Number nodes generated: " + BoardOperations.NODE_COUNT);
+        System.out.println("Number nodes generated: " + Minimax.NODE_COUNT);
 
 
 

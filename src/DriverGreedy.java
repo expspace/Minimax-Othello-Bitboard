@@ -18,7 +18,9 @@ public class DriverGreedy {
         int numMovesPTwo = 4;
 
         BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
+
         BoardOperations bbOps = new BoardOperations();
+        GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm(bbOps);
 
         do {
             System.out.println("TURN: " + turn);
@@ -29,7 +31,7 @@ public class DriverGreedy {
                 numMovesPOne = Long.bitCount(moves);
                 System.out.println("NUM MOVES: " + numMovesPOne);
                 System.out.println("CHOOSES MOVE: ");
-                bitboards = bbOps.makeMaxDiskMove(bitboards[0], bitboards[1],turn);
+                bitboards = greedyAlgorithm.performNextMove(bitboards[0], bitboards[1],turn);
                 BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
             } else {
@@ -38,7 +40,7 @@ public class DriverGreedy {
                 numMovesPTwo = Long.bitCount(moves);
                 System.out.println("NUM MOVES: " + numMovesPTwo);
                 System.out.println("CHOOSES MOVE: ");
-                bitboards = bbOps.makeMaxDiskMove(bitboards[1], bitboards[0],turn);
+                bitboards = greedyAlgorithm.performNextMove(bitboards[1], bitboards[0],turn);
                 BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
             }
 
