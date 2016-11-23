@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class Minimax implements SearchStrategy {
 
     public static final int POS_INFINITY_WIN = Integer.MAX_VALUE;
-    public static final int POS_INFINITY_INIT = Integer.MAX_VALUE - 1;
+    public static final int POS_INFINITY_INIT = 1000000000;
 
     public static final int NEG_INFINITY_LOSS = Integer.MIN_VALUE;
-    public static final int NEG_INFINITY_INIT = Integer.MIN_VALUE + 1;
+    public static final int NEG_INFINITY_INIT = -1000000000;
 
-    public static int SEARCH_DEPTH = 9;
+    public static int SEARCH_DEPTH = 7;
     public static long NODE_COUNT = 0; //printing purposes
 
 
@@ -61,9 +61,9 @@ public class Minimax implements SearchStrategy {
             }
 
 
-            System.out.println("CHILD BOARD: ");
-            System.out.println("child board minimax value: " + value);
-            BitboardHelper.bbPrint(childBoard[0],childBoard[1]);
+//            System.out.println("CHILD BOARD: ");
+//            System.out.println("child board minimax value: " + value);
+//            BitboardHelper.bbPrint(childBoard[0],childBoard[1]);
 
 
             if(value > maxValue) {
@@ -99,7 +99,7 @@ public class Minimax implements SearchStrategy {
         //handle no moves node
         if(childBoardList.size() == 0) {
             if(boardOperations.gameOver(bbSelf,bbEnemy,1,1)) {    //reached terminal node
-                return maxPlayer? POS_INFINITY_WIN : NEG_INFINITY_LOSS; //TODO false check who wins
+                return maxPlayer? POS_INFINITY_WIN : NEG_INFINITY_LOSS; //TODO false check who wins FIX!!
             } else {    //pass turn - continues minimax with unchanged board
                 return minimax(bbEnemy,bbSelf,depth - 1,!maxPlayer, turn + 1);
             }
