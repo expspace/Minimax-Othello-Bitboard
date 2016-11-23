@@ -21,6 +21,37 @@ public class BitboardHelper {
         System.out.println(sb);
     }
 
+
+    public static void bbPrintForHumans(long bbPOne, long bbPTwo) {
+        int rowIndex = 1;
+        StringBuilder sb = new StringBuilder();
+        sb.append("  1 2 3 4 5 6 7 8 \n" );
+        sb.append("  --------------- \n" + rowIndex + "|");
+        rowIndex++;
+        for (int i = 63; i >= 0; i--) {
+            if (((bbPOne >> i) & 1) > 0) {
+                sb.append("B ");
+            } else if (((bbPTwo >> i) & 1) > 0) {
+                sb.append("W ");
+            } else {
+                sb.append("O ");
+            }
+
+            if (i % 8 == 0) {
+                if(i == 0) {
+                    sb.append('\n');
+                } else {
+                    sb.append("\n" + rowIndex + "|");
+                    rowIndex++;
+                }
+
+            }
+        }
+        System.out.println(sb);
+    }
+
+
+
     public static void printWinner(long bbPOne, long bbPtwo) {
         System.out.println("GAMEOVER");
         if(Long.bitCount(bbPOne) > Long.bitCount(bbPtwo)) {

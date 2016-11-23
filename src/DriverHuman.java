@@ -3,7 +3,7 @@ import java.util.Scanner;
 /**
  * Created by NSPACE on 11/18/2016.
  */
-public class DriverGreedy {
+public class DriverHuman {
     public static void main(String[] args) {
 
         Scanner kb = new Scanner(System.in);
@@ -17,9 +17,14 @@ public class DriverGreedy {
         int numMovesPOne = 4;
         int numMovesPTwo = 4;
 
-        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
-
+        BitboardHelper.bbPrintForHumans(bitboards[0], bitboards[1]);
         BoardOperations bbOps = new BoardOperations();
+
+
+        //PLAYER 1 BLACK - HUMAN
+        HumanSearch humanSearch = new HumanSearch(bbOps);
+
+        //PLAYER 2 WHITE - COMPUTER
         GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm(bbOps);
 
         do {
@@ -31,8 +36,8 @@ public class DriverGreedy {
                 numMovesPOne = Long.bitCount(moves);
                 System.out.println("NUM MOVES: " + numMovesPOne);
                 System.out.println("CHOOSES MOVE: ");
-                bitboards = greedyAlgorithm.performNextMove(bitboards[0], bitboards[1],turn);
-                BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
+                bitboards = humanSearch.performNextMove(bitboards[0], bitboards[1],turn);
+                BitboardHelper.bbPrintForHumans(bitboards[0], bitboards[1]);
 
             } else {
                 System.out.println("WHITES TURN");
@@ -41,11 +46,10 @@ public class DriverGreedy {
                 System.out.println("NUM MOVES: " + numMovesPTwo);
                 System.out.println("CHOOSES MOVE: ");
                 bitboards = greedyAlgorithm.performNextMove(bitboards[1], bitboards[0],turn);
-                BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
+                BitboardHelper.bbPrintForHumans(bitboards[0], bitboards[1]);
             }
 
             turn++;
-            kb.nextInt(); //pauses iteration
 
         } while(!bbOps.gameOver(bitboards[0],bitboards[1],numMovesPOne,numMovesPTwo));
 
