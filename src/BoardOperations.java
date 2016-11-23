@@ -20,11 +20,11 @@ public class BoardOperations {
     }
 
     private long shiftS(long bb) {
-        return bb >> 8;
+        return bb >>> 8;
     }
 
     private long shiftE(long bb) {
-        return (bb & MASK_E) >> 1;
+        return (bb & MASK_E) >>> 1;
     }
 
     private long shiftW(long bb) {
