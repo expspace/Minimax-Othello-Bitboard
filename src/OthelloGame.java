@@ -33,7 +33,7 @@ public class OthelloGame {
                 long moves = boardOperations.generateMoves(bitboards[0], bitboards[1]);
                 numMovesPOne = Long.bitCount(moves);
                 bitboards = playerOne.performNextMove(bitboards[0], bitboards[1],turn);
-                System.out.println("MOVE PERFORMED: ");
+                System.out.println("MOVE PERFORMED: \n");
                 BitboardHelper.bbPrintForHumans(bitboards[0], bitboards[1]);
 
             } else {
@@ -41,7 +41,7 @@ public class OthelloGame {
                 long moves = boardOperations.generateMoves(bitboards[1], bitboards[0]);
                 numMovesPTwo = Long.bitCount(moves);
                 bitboards = playerTwo.performNextMove(bitboards[1], bitboards[0],turn);
-                System.out.println("MOVE PERFORMED: ");
+                System.out.println("MOVE PERFORMED: \n");
                 BitboardHelper.bbPrintForHumans(bitboards[0], bitboards[1]);
             }
 

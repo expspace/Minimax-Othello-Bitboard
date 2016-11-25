@@ -15,35 +15,35 @@ public class BoardOperations {
      * Methods to shift a players bitboard in one of the 8 possible directions (N,S,E,W,NW,NE,SW,SE)
      */
 
-    private long shiftN(long bb) {
+    public long shiftN(long bb) {
         return bb << 8;
     }
 
-    private long shiftS(long bb) {
+    public long shiftS(long bb) {
         return bb >>> 8;
     }
 
-    private long shiftE(long bb) {
+    public long shiftE(long bb) {
         return (bb & MASK_E) >>> 1;
     }
 
-    private long shiftW(long bb) {
+    public long shiftW(long bb) {
         return (bb & MASK_W) << 1;
     }
 
-    private long shiftNW(long bb) {
+    public long shiftNW(long bb) {
         return shiftN(shiftW(bb));
     }
 
-    private long shiftNE(long bb) {
+    public long shiftNE(long bb) {
         return shiftN(shiftE(bb));
     }
 
-    private long shiftSW(long bb) {
+    public long shiftSW(long bb) {
         return shiftS(shiftW(bb));
     }
 
-    private long shiftSE(long bb) {
+    public long shiftSE(long bb) {
         return shiftS(shiftE(bb));
     }
 

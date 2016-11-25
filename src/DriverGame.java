@@ -3,15 +3,28 @@
  */
 public class DriverGame {
     public static void main(String[] args) {
-        BoardOperations boardOperations = new BoardOperations();
+        BoardOperations bbOps = new BoardOperations();
 
-        Player p1 = new Player(new GreedyAlgorithm(boardOperations));
-//        Player p2 = new Player(new GreedyAlgorithm(boardOperations));
-//        Player p2 = new Player(new Minimax(boardOperations,new RandomEvaluator()));
-//        Player p2 = new Player(new Minimax(boardOperations,new PositionalEvaluator()));
-        Player p2 = new Player(new Minimax(boardOperations,new MobilityEvaluator(boardOperations)));
+        /** PLAYER 1 (BLACK) **/
 
-        OthelloGame othelloGame = new OthelloGame(p1,p2,boardOperations);
+//        Player p1 = new Player(new GreedyAlgorithm(bbOps));
+//        Player p1 = new Player(new Minimax(bbOps,new RandomEvaluator()));
+//        Player p1 = new Player(new Minimax(bbOps,new PositionalEvaluator()));
+        Player p1 = new Player(new Minimax(bbOps,new MobilityEvaluator(bbOps)));
+//        Player p1 = new Player(new Minimax(bbOps,new FrontierEvaluator(bbOps)));
+//        Player p1 = new Player(new HumanSearch(bbOps));
+
+        /** PLAYER 2 (WHITE) **/
+
+//        Player p2 = new Player(new GreedyAlgorithm(bbOps));
+//        Player p2 = new Player(new Minimax(bbOps,new RandomEvaluator()));
+//        Player p2 = new Player(new Minimax(bbOps,new PositionalEvaluator()));
+//        Player p2 = new Player(new Minimax(bbOps,new MobilityEvaluator(bbOps)));
+        Player p2 = new Player(new Minimax(bbOps,new FrontierEvaluator(bbOps)));
+//        Player p2 = new Player(new HumanSearch(bbOps));
+
+
+        OthelloGame othelloGame = new OthelloGame(p1,p2,bbOps);
 
         othelloGame.start();
     }
