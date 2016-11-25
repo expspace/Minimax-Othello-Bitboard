@@ -50,14 +50,14 @@ public class Minimax implements SearchStrategy {
         int maxValue = NEG_INFINITY_INIT;
 
         //run minimax maxPlayer = false on children keep largest score board
-        for(long[] childBoard : childBoardList) {
+        for (long[] childBoard : childBoardList) {
             int value;
 
             //compute minimax at child board who is min player; self board alternates at child board
-            if(turn % 2 == 0) {
-                value = minimax(childBoard[1],childBoard[0], SEARCH_DEPTH - 1,false, turn + 1);
+            if (turn % 2 == 0) {
+                value = minimax(childBoard[1], childBoard[0], SEARCH_DEPTH - 1, false, turn + 1);
             } else {
-                value = minimax(childBoard[0],childBoard[1], SEARCH_DEPTH - 1,false, turn + 1);
+                value = minimax(childBoard[0], childBoard[1], SEARCH_DEPTH - 1, false, turn + 1);
             }
 
 
@@ -66,7 +66,7 @@ public class Minimax implements SearchStrategy {
 //            BitboardHelper.bbPrint(childBoard[0],childBoard[1]);
 
 //            System.out.println("value, max value :"  + value + " " + maxValue);
-            if(value > maxValue) {
+            if (value > maxValue) {
                 updatedBoard = childBoard;
                 maxValue = value;
             }
@@ -82,44 +82,60 @@ public class Minimax implements SearchStrategy {
      * @return evaluation value of current node
      */
 
-    public int minimax(long bbSelf, long bbEnemy,int depth, boolean maxPlayer, int turn) {
+    public int minimax(long bbSelf, long bbEnemy, int depth, boolean maxPlayer, int turn) {
 
         //handle maximum tree depth
-        if(depth == 0 ) {
-            if(maxPlayer) {
-                return evaluationFunction.evaluateBoard(bbSelf,bbEnemy);
-            } else { //at a min player node the self board is the min players enemy board (confusing I know)
-                return evaluationFunction.evaluateBoard(bbEnemy,bbSelf);
+        if (depth == 0) {
+            if (maxPlayer) {
+                return evaluationFunction.evaluateBoard(bbSelf, bbEnemy);
+            } else { //at a min player node the enemy board is the max players self board (evaluate from max's perspective)
+                return evaluationFunction.evaluateBoard(bbEnemy, bbSelf);
             }
         }
 
-        ArrayList<long[]> childBoardList = boardOperations.getChildBitboards(bbSelf,bbEnemy,turn);
+        ArrayList<long[]> childBoardList = boardOperations.getChildBitboards(bbSelf, bbEnemy, turn);
         NODE_COUNT += childBoardList.size();
 
-        //handle no moves node
-        if(childBoardList.size() == 0) {
-            if(boardOperations.gameOver(bbSelf,bbEnemy,1,1)) {    //reached terminal node
-                return maxPlayer? POS_INFINITY_WIN : NEG_INFINITY_LOSS; //TODO false check who wins FIX!!
+        //handle no moves node (either terminal game over node or pass turn)
+        if (childBoardList.size() == 0) {
+            if (boardOperations.gameOver(bbSelf, bbEnemy, 1, 1)) {    //reached terminal node
+                if (maxPlayer) {
+                    if (Long.bitCount(bbSelf) > Long.bitCount(bbEnemy)) {
+                        return POS_INFINITY_WIN;
+                    } else if (Long.bitCount(bbSelf) < Long.bitCount(bbEnemy)) {
+                        return NEG_INFINITY_LOSS;
+                    } else { //draw
+                        return 0;
+                    }
+                } else { //at a min player node the enemy board is the max players self board (evaluate from max's perspective)
+                    if (Long.bitCount(bbEnemy) > Long.bitCount(bbSelf)) {
+                        return POS_INFINITY_WIN;
+                    } else if (Long.bitCount(bbEnemy) < Long.bitCount(bbSelf)) {
+                        return NEG_INFINITY_LOSS;
+                    } else { //draw
+                        return 0;
+                    }
+                }
             } else {    //pass turn - continues minimax with unchanged board
-                return minimax(bbEnemy,bbSelf,depth - 1,!maxPlayer, turn + 1); //TODO parentPassed = true
+                return minimax(bbEnemy, bbSelf, depth - 1, !maxPlayer, turn + 1); //TODO parentPassed = true
             }
         }
 
         int selfBBIndex = turn % 2;
         int enemyBBIndex = (turn + 1) % 2;
 
-        if(maxPlayer) {
+        if (maxPlayer) {
             int bestValue = NEG_INFINITY_INIT;
-            for(long[] childBoard : childBoardList) {
-                int value = minimax(childBoard[enemyBBIndex],childBoard[selfBBIndex],depth - 1, false, turn + 1); //TODO parentPassed
-                bestValue = Math.max(bestValue,value);
+            for (long[] childBoard : childBoardList) {
+                int value = minimax(childBoard[enemyBBIndex], childBoard[selfBBIndex], depth - 1, false, turn + 1); //TODO parentPassed
+                bestValue = Math.max(bestValue, value);
             }
             return bestValue;
         } else {    //minPlayer
             int bestValue = POS_INFINITY_INIT;
-            for(long[] childBoard : childBoardList) {
-                int value = minimax(childBoard[enemyBBIndex],childBoard[selfBBIndex],depth - 1, true, turn + 1); //TODO parentPassed = false
-                bestValue = Math.min(bestValue,value);
+            for (long[] childBoard : childBoardList) {
+                int value = minimax(childBoard[enemyBBIndex], childBoard[selfBBIndex], depth - 1, true, turn + 1); //TODO parentPassed = false
+                bestValue = Math.min(bestValue, value);
             }
             return bestValue;
         }
