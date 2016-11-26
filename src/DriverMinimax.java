@@ -42,26 +42,28 @@ public class DriverMinimax {
         BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
         System.out.println();
 
+
+
         //MINIMAX TEST
+        for(Minimax.SEARCH_DEPTH = 2; Minimax.SEARCH_DEPTH <= 11; Minimax.SEARCH_DEPTH++, Minimax.NODE_COUNT = 0) {
+            long startTime = System.nanoTime();
+
+            minimax.performNextMove(bitboards[1], bitboards[0],turn);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            System.out.println("Estimated millisecond execution time: " + estimatedTime / 1000000.0);
+
+            //print depth
+            System.out.println("Depth of minimax search: " + Minimax.SEARCH_DEPTH);
+            //print #nodes generated
+            System.out.println("Number nodes generated: " + Minimax.NODE_COUNT);
+            System.out.println();
+        }
 
 
-        long startTime = System.nanoTime();
-
-        bitboards = minimax.performNextMove(bitboards[1], bitboards[0],turn);
-
-        long estimatedTime = System.nanoTime() - startTime;
-        System.out.println("Estimated millisecond execution time: " + estimatedTime / 1000000.0);
-
-        //print depth
-        System.out.println("Depth of minimax search: " + Minimax.SEARCH_DEPTH);
-        //print #nodes generated
-        System.out.println("Number nodes generated: " + Minimax.NODE_COUNT);
-
-
-
-        System.out.println("UPDATED BOARD: ");
-        System.out.println();
-        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
+//        System.out.println("UPDATED BOARD: ");
+//        System.out.println();
+//        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
 
 

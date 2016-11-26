@@ -4,11 +4,14 @@
 public class OthelloGame {
     private Player playerOne;
     private Player playerTwo;
+    private boolean passTurn;
+    private boolean parentPassTurn;
     private int numMovesPOne;
     private int numMovesPTwo;
     private BoardOperations boardOperations;
     private int turn;
     private long[] bitboards;
+
 
     public OthelloGame(Player playerOne, Player playerTwo, BoardOperations boardOperations) {
         this.playerOne = playerOne;
@@ -27,11 +30,17 @@ public class OthelloGame {
 
         do {
             System.out.println("TURN: " + turn);
+            parentPassTurn = passTurn;
 
             if(turn % 2 == 0) {
                 System.out.println("PLAYER 1 - BLACKS TURN \n");
                 long moves = boardOperations.generateMoves(bitboards[0], bitboards[1]);
+                passTurn = (moves == 0) ? true : false;
                 numMovesPOne = Long.bitCount(moves);
+
+                System.out.println("LEGAL MOVES: ");
+                BitboardHelper.bbPrintForHumans(moves,0);
+
                 bitboards = playerOne.performNextMove(bitboards[0], bitboards[1],turn);
                 System.out.println("MOVE PERFORMED: \n");
                 BitboardHelper.bbPrintForHumans(bitboards[0], bitboards[1]);
@@ -39,7 +48,12 @@ public class OthelloGame {
             } else {
                 System.out.println("PLAYER 2 - WHITES TURN \n");
                 long moves = boardOperations.generateMoves(bitboards[1], bitboards[0]);
+                passTurn = (moves == 0) ? true : false;
                 numMovesPTwo = Long.bitCount(moves);
+
+                System.out.println("LEGAL MOVES: ");
+                BitboardHelper.bbPrintForHumans(0,moves);
+
                 bitboards = playerTwo.performNextMove(bitboards[1], bitboards[0],turn);
                 System.out.println("MOVE PERFORMED: \n");
                 BitboardHelper.bbPrintForHumans(bitboards[0], bitboards[1]);
@@ -48,7 +62,6 @@ public class OthelloGame {
             turn++;
 
         } while(!boardOperations.gameOver(bitboards[0],bitboards[1],numMovesPOne,numMovesPTwo));
-
         BitboardHelper.printWinner(bitboards[0],bitboards[1]);
     }
 }

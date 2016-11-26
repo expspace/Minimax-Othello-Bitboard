@@ -251,6 +251,7 @@ public class BoardOperations {
         long moves = generateMoves(bbSelf, bbEnemy);
         long[] bitMoveArray = toBitMoveArray(moves);
 
+
         //make all child boards given candidate moves
         for (int i = 0; i < bitMoveArray.length; i++) {
             childBitBoards.add(makeMove(bitMoveArray[i], bbSelf, bbEnemy, turn));
@@ -264,8 +265,8 @@ public class BoardOperations {
      */
     //TODO fix pass,pass game over
     public boolean gameOver(long bbPOne, long bbPTwo, int numMovesPOne, int numMovesPTwo) {
-        return ((bbPOne | bbPTwo) == -1L) ||             // All squares are occupied.
-                (numMovesPOne + numMovesPTwo == 0) ||    // Neither player has any moves available.
-                (bbPOne == 0 || bbPTwo == 0);            // One player has had all chips eliminated.
+        return ((bbPOne | bbPTwo) == -1L) ||            // All squares are occupied.
+                (bbPOne == 0 || bbPTwo == 0) ||         // One player has had all chips eliminated.
+                (numMovesPOne + numMovesPTwo == 0);     // Neither player has any moves available.
     }
 }

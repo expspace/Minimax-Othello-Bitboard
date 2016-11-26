@@ -21,6 +21,11 @@ public class HumanSearch implements SearchStrategy {
         int[] chosenMove;
         long moveBitboard;
 
+        if(legalMoves == 0) {
+            System.out.println("Pass turn - no moves");
+            return new long[] {bbSelf,bbEnemy};
+        }
+
         do {
             chosenMove = promptMove();  //gets player move checks valid input
             moveBitboard = rowColToBBArray(chosenMove[0],chosenMove[1]);

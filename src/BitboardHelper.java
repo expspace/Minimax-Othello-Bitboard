@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 /**
  * Created by NSPACE on 11/17/2016.
  */
@@ -63,6 +67,23 @@ public class BitboardHelper {
         }
         System.out.println("Black disk count: " + Long.bitCount(bbPOne));
         System.out.println("White disk count: " + Long.bitCount(bbPtwo));
+    }
+    
+    public static void readMoveFormat() {
+        Scanner kb = new Scanner(System.in);
+        Pattern stringPattern = Pattern.compile("\\([BW0]{8}\\)");
+
+        ArrayList<String> stringList = new ArrayList<>();
+
+        kb.nextLine();
+
+        while(kb.hasNext(stringPattern)) {
+            stringList.add(kb.nextLine());
+        }
+
+        kb.nextLine();
+
+        //loop through stringlist add convert to bits
     }
 
     //TODO adapter/converter for input (array index to bitboard)
