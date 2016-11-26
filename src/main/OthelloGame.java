@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Created by NSPACE on 11/22/2016.
  */
@@ -38,8 +40,8 @@ public class OthelloGame {
                 passTurn = (moves == 0) ? true : false;
                 numMovesPOne = Long.bitCount(moves);
 
-                System.out.println("LEGAL MOVES: ");
-                BitboardHelper.bbPrintForHumans(moves,0);
+//                System.out.println("LEGAL MOVES: ");
+//                BitboardHelper.bbPrintForHumans(moves,0);
 
                 bitboards = playerOne.performNextMove(bitboards[0], bitboards[1],turn);
                 System.out.println("MOVE PERFORMED: \n");
@@ -51,8 +53,8 @@ public class OthelloGame {
                 passTurn = (moves == 0) ? true : false;
                 numMovesPTwo = Long.bitCount(moves);
 
-                System.out.println("LEGAL MOVES: ");
-                BitboardHelper.bbPrintForHumans(0,moves);
+//                System.out.println("LEGAL MOVES: ");
+//                BitboardHelper.bbPrintForHumans(0,moves);
 
                 bitboards = playerTwo.performNextMove(bitboards[1], bitboards[0],turn);
                 System.out.println("MOVE PERFORMED: \n");

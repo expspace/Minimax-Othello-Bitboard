@@ -1,3 +1,10 @@
+package main.drivers;
+
+import main.BitboardHelper;
+import main.BoardOperations;
+import main.Minimax;
+import main.RandomEvaluator;
+
 /**
  * Created by NSPACE on 11/17/2016.
  */
@@ -63,7 +70,7 @@ public class DriverMinimax {
 
 //        System.out.println("UPDATED BOARD: ");
 //        System.out.println();
-//        BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
+//        main.BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
 
 

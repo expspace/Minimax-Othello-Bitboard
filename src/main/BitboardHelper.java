@@ -1,3 +1,5 @@
+package main;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -68,7 +70,7 @@ public class BitboardHelper {
         System.out.println("Black disk count: " + Long.bitCount(bbPOne));
         System.out.println("White disk count: " + Long.bitCount(bbPtwo));
     }
-    
+
     public static void readMoveFormat() {
         Scanner kb = new Scanner(System.in);
         Pattern stringPattern = Pattern.compile("\\([BW0]{8}\\)");

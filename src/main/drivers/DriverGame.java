@@ -1,3 +1,8 @@
+package main.drivers;
+
+
+import main.*;
+
 /**
  * Created by NSPACE on 11/22/2016.
  */
@@ -7,12 +12,12 @@ public class DriverGame {
 
         /** PLAYER 1 (BLACK) **/
 
-//        Player p1 = new Player(new GreedyAlgorithm(bbOps));
+        Player p1 = new Player(new GreedyAlgorithm(bbOps));
 //        Player p1 = new Player(new Minimax(bbOps,new RandomEvaluator()));
 //        Player p1 = new Player(new Minimax(bbOps,new PositionalEvaluator()));
 //        Player p1 = new Player(new Minimax(bbOps,new MobilityEvaluator(bbOps)));
 //        Player p1 = new Player(new Minimax(bbOps,new FrontierEvaluator(bbOps)));
-        Player p1 = new Player(new HumanSearch(bbOps));
+//        Player p1 = new Player(new HumanSearch(bbOps));
 
         /** PLAYER 2 (WHITE) **/
 
