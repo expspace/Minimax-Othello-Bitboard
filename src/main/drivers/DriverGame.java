@@ -12,21 +12,26 @@ public class DriverGame {
 
         /** PLAYER 1 (BLACK) **/
 
-        Player p1 = new Player(new GreedyAlgorithm(bbOps));
+     //   Player p1 = new Player(new GreedyAlgorithm(bbOps));
 //        Player p1 = new Player(new Minimax(bbOps,new RandomEvaluator()));
 //        Player p1 = new Player(new Minimax(bbOps,new PositionalEvaluator()));
 //        Player p1 = new Player(new Minimax(bbOps,new MobilityEvaluator(bbOps)));
 //        Player p1 = new Player(new Minimax(bbOps,new FrontierEvaluator(bbOps)));
 //        Player p1 = new Player(new HumanSearch(bbOps));
+      //  Player p1 = new Player(new Minimax(bbOps,new MobilityEvaluator(bbOps)));
+        Player p1 = new Player(new Minimax(bbOps,new CombinationEvaluator(bbOps)));
+
 
         /** PLAYER 2 (WHITE) **/
 
 //        Player p2 = new Player(new GreedyAlgorithm(bbOps));
 //        Player p2 = new Player(new Minimax(bbOps,new RandomEvaluator()));
 //        Player p2 = new Player(new Minimax(bbOps,new PositionalEvaluator()));
-        Player p2 = new Player(new Minimax(bbOps,new MobilityEvaluator(bbOps)));
+       // Player p2 = new Player(new Minimax(bbOps,new MobilityEvaluator(bbOps)));
 //        Player p2 = new Player(new Minimax(bbOps,new FrontierEvaluator(bbOps)));
 //        Player p2 = new Player(new HumanSearch(bbOps));
+        Player p2 = new Player(new Minimax(bbOps,new MobilityEvaluator(bbOps)));
+
 
 
         OthelloGame othelloGame = new OthelloGame(p1,p2,bbOps);

@@ -11,7 +11,7 @@ public class FrontierEvaluator implements EvaluationFunction {
     }
 
     @Override
-    public int evaluateBoard(long bbSelf, long bbEnemy) {
+    public int evaluateBoard(long bbSelf, long bbEnemy, int turn) {
         return getNumFrontier(bbEnemy,bbSelf) - getNumFrontier(bbSelf,bbEnemy);
     }
 

@@ -89,9 +89,9 @@ public class Minimax implements SearchStrategy {
         //handle maximum tree depth
         if (depth == 0) {
             if (maxPlayer) {
-                return evaluationFunction.evaluateBoard(bbSelf, bbEnemy);
+                return evaluationFunction.evaluateBoard(bbSelf, bbEnemy, turn);
             } else { //at a min player node the enemy board is the max players self board (evaluate from max's perspective)
-                return evaluationFunction.evaluateBoard(bbEnemy, bbSelf);
+                return evaluationFunction.evaluateBoard(bbEnemy, bbSelf, turn);
             }
         }
 

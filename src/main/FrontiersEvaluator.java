@@ -25,7 +25,7 @@ public class FrontiersEvaluator implements EvaluationFunction {
      * @return
      */
     @Override
-    public int evaluateBoard(long bbSelf, long bbEnemy) {
+    public int evaluateBoard(long bbSelf, long bbEnemy, int turn) {
         
         List<Integer> selfDiskPositions = new ArrayList<>();
         List<Integer> enemyDiskPositions = new ArrayList<>();
@@ -50,7 +50,7 @@ public class FrontiersEvaluator implements EvaluationFunction {
         //Todo  flip at least one of your opponent’s pieces in order to move, : must verify that we have gained at 1 disk  if not move isn't not good
 
 
-        return frontierSelf - frontierEnemy;
+        return  frontierEnemy - frontierSelf;
     }
 
 
