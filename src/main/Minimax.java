@@ -40,7 +40,7 @@ public class Minimax implements SearchStrategy {
         nodeCount += childBoardList.size();
 
         //return same board and exit if no moves can be made
-        if (childBoardList.size() == 0) { //TODO turn++?
+        if (childBoardList.size() == 0) {
             if (turn % 2 == 0) {
                 return new long[]{bbSelf, bbEnemy};
             } else {
@@ -57,9 +57,9 @@ public class Minimax implements SearchStrategy {
 
             //compute minimax at child board who is min player; self board alternates at child board
             if (turn % 2 == 0) {
-                value = minimax(childBoard[1], childBoard[0], searchDepth - 1, false, turn + 1);
+                value = minimax(childBoard[1], childBoard[0], searchDepth - 1, false, turn + 1, false);
             } else {
-                value = minimax(childBoard[0], childBoard[1], searchDepth - 1, false, turn + 1);
+                value = minimax(childBoard[0], childBoard[1], searchDepth - 1, false, turn + 1, false);
             }
 
 
@@ -84,7 +84,7 @@ public class Minimax implements SearchStrategy {
      * @return evaluation value of current node
      */
 
-    public int minimax(long bbSelf, long bbEnemy, int depth, boolean maxPlayer, int turn) {
+    public int minimax(long bbSelf, long bbEnemy, int depth, boolean maxPlayer, int turn, boolean parentPassTurn) {
 
         //handle maximum tree depth
         if (depth == 0) {
@@ -100,7 +100,7 @@ public class Minimax implements SearchStrategy {
 
         //handle no moves node (either terminal game over node or pass turn)
         if (childBoardList.size() == 0) {
-            if (boardOperations.gameOver(bbSelf, bbEnemy, 1, 1)) {    //reached terminal node
+            if (boardOperations.gameOver(bbSelf, bbEnemy, true, parentPassTurn)) {    //reached terminal node
                 if (maxPlayer) {
                     if (Long.bitCount(bbSelf) > Long.bitCount(bbEnemy)) {
                         return POS_INFINITY_WIN;
@@ -119,7 +119,7 @@ public class Minimax implements SearchStrategy {
                     }
                 }
             } else {    //pass turn - continues minimax with unchanged board
-                return minimax(bbEnemy, bbSelf, depth - 1, !maxPlayer, turn + 1); //TODO parentPassed = true
+                return minimax(bbEnemy, bbSelf, depth - 1, !maxPlayer, turn + 1, true);
             }
         }
 
@@ -129,14 +129,14 @@ public class Minimax implements SearchStrategy {
         if (maxPlayer) {
             int bestValue = NEG_INFINITY_INIT;
             for (long[] childBoard : childBoardList) {
-                int value = minimax(childBoard[enemyBBIndex], childBoard[selfBBIndex], depth - 1, false, turn + 1); //TODO parentPassed
+                int value = minimax(childBoard[enemyBBIndex], childBoard[selfBBIndex], depth - 1, false, turn + 1, false);
                 bestValue = Math.max(bestValue, value);
             }
             return bestValue;
         } else {    //minPlayer
             int bestValue = POS_INFINITY_INIT;
             for (long[] childBoard : childBoardList) {
-                int value = minimax(childBoard[enemyBBIndex], childBoard[selfBBIndex], depth - 1, true, turn + 1); //TODO parentPassed = false
+                int value = minimax(childBoard[enemyBBIndex], childBoard[selfBBIndex], depth - 1, true, turn + 1, false);
                 bestValue = Math.min(bestValue, value);
             }
             return bestValue;

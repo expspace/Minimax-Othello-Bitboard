@@ -34,8 +34,8 @@ public class DriverMinimax {
 
         int turn = 0;
         BoardOperations bbOps = new BoardOperations();
-        Minimax minimax = new Minimax(bbOps,new RandomEvaluator());
-//        AlphaBetaMinimax minimax = new AlphaBetaMinimax(bbOps,new RandomEvaluator());
+//        Minimax minimax = new Minimax(bbOps,new RandomEvaluator());
+        AlphaBetaMinimax minimax = new AlphaBetaMinimax(bbOps,new RandomEvaluator());
 
         BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
@@ -51,7 +51,7 @@ public class DriverMinimax {
         long moveTwo[] = new long[2];
 
         //MINIMAX BENCHMARK TESTING
-        while(searchDepth <= 11) {
+        while(searchDepth <= 14) {
             minimax.setSearchDepth(searchDepth);
 
             long startTime = System.nanoTime();

@@ -8,8 +8,6 @@ public class OthelloGame {
     private Player playerTwo;
     private boolean passTurn;
     private boolean parentPassTurn;
-    private int numMovesPOne;
-    private int numMovesPTwo;
     private BoardOperations boardOperations;
     private int turn;
     private long[] bitboards;
@@ -38,8 +36,8 @@ public class OthelloGame {
                 System.out.println("PLAYER 1 - BLACKS TURN \n");
                 long moves = boardOperations.generateMoves(bitboards[0], bitboards[1]);
                 passTurn = (moves == 0) ? true : false;
-                numMovesPOne = Long.bitCount(moves);
 
+//                System.out.println("NUM MOVES: " + Long.bitCount(moves));
 //                System.out.println("LEGAL MOVES: ");
 //                BitboardHelper.bbPrintForHumans(moves,0);
 
@@ -51,8 +49,8 @@ public class OthelloGame {
                 System.out.println("PLAYER 2 - WHITES TURN \n");
                 long moves = boardOperations.generateMoves(bitboards[1], bitboards[0]);
                 passTurn = (moves == 0) ? true : false;
-                numMovesPTwo = Long.bitCount(moves);
 
+//                System.out.println("NUM MOVES: " + Long.bitCount(moves));
 //                System.out.println("LEGAL MOVES: ");
 //                BitboardHelper.bbPrintForHumans(0,moves);
 
@@ -63,7 +61,7 @@ public class OthelloGame {
 
             turn++;
 
-        } while(!boardOperations.gameOver(bitboards[0],bitboards[1],numMovesPOne,numMovesPTwo));
+        } while(!boardOperations.gameOver(bitboards[0],bitboards[1],passTurn,parentPassTurn));
         BitboardHelper.printWinner(bitboards[0],bitboards[1]);
     }
 }

@@ -265,10 +265,9 @@ public class BoardOperations {
     /**
      * Tests each of the three potential conditions for a game over
      */
-    //TODO fix pass,pass game over
-    public boolean gameOver(long bbPOne, long bbPTwo, int numMovesPOne, int numMovesPTwo) {
+    public boolean gameOver(long bbPOne, long bbPTwo, boolean passTurn, boolean parentPassTurn) {
         return ((bbPOne | bbPTwo) == -1L) ||            // All squares are occupied.
                 (bbPOne == 0 || bbPTwo == 0) ||         // One player has had all chips eliminated.
-                (numMovesPOne + numMovesPTwo == 0);     // Neither player has any moves available.
+                (passTurn && parentPassTurn);           // Neither player has any moves available.
     }
 }
