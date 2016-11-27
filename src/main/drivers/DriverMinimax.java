@@ -1,9 +1,6 @@
 package main.drivers;
 
-import main.BitboardHelper;
-import main.BoardOperations;
-import main.Minimax;
-import main.RandomEvaluator;
+import main.*;
 
 /**
  * Created by NSPACE on 11/17/2016.
@@ -38,6 +35,7 @@ public class DriverMinimax {
         int turn = 0;
         BoardOperations bbOps = new BoardOperations();
         Minimax minimax = new Minimax(bbOps,new RandomEvaluator());
+//        AlphaBetaMinimax minimax = new AlphaBetaMinimax(bbOps,new RandomEvaluator());
 
         BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
@@ -49,33 +47,33 @@ public class DriverMinimax {
         BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
         System.out.println();
 
+        int searchDepth = 2;
+        long moveTwo[] = new long[2];
 
+        //MINIMAX BENCHMARK TESTING
+        while(searchDepth <= 11) {
+            minimax.setSearchDepth(searchDepth);
 
-        //MINIMAX TEST
-        for(Minimax.SEARCH_DEPTH = 2; Minimax.SEARCH_DEPTH <= 11; Minimax.SEARCH_DEPTH++, Minimax.NODE_COUNT = 0) {
             long startTime = System.nanoTime();
 
-            minimax.performNextMove(bitboards[1], bitboards[0],turn);
+            moveTwo = minimax.performNextMove(bitboards[1], bitboards[0],turn);
 
             long estimatedTime = System.nanoTime() - startTime;
             System.out.println("Estimated millisecond execution time: " + estimatedTime / 1000000.0);
 
             //print depth
-            System.out.println("Depth of minimax search: " + Minimax.SEARCH_DEPTH);
+            System.out.println("Depth of minimax search: " + minimax.getSearchDepth());
             //print #nodes generated
-            System.out.println("Number nodes generated: " + Minimax.NODE_COUNT);
+            System.out.println("Number nodes generated: " + minimax.getNodeCount());
             System.out.println();
+
+            searchDepth++;
+            minimax.setNodeCount(0);
         }
 
-
-//        System.out.println("UPDATED BOARD: ");
-//        System.out.println();
-//        main.BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
-
-
-
-
-
+        System.out.println("UPDATED BOARD: ");
+        System.out.println();
+        BitboardHelper.bbPrintA2Format(moveTwo[0], moveTwo[1]);
 
     }
 }

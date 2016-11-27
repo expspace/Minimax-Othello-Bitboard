@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by NSPACE on 11/22/2016.
  */
-public class Minimax implements SearchStrategy {
+public class AlphaBetaMinimax implements SearchStrategy {
 
     public static final int POS_INFINITY_WIN = 1000000000;
     public static final int POS_INFINITY_INIT = Integer.MAX_VALUE;
@@ -13,14 +13,14 @@ public class Minimax implements SearchStrategy {
     public static final int NEG_INFINITY_LOSS = -1000000000;
     public static final int NEG_INFINITY_INIT = Integer.MIN_VALUE;
 
-    private int searchDepth = 7; //default search depth
-    private long nodeCount = 0; //printing purposes
+    public int searchDepth = 7;
+    public long nodeCount = 0; //printing purposes
 
 
     private BoardOperations boardOperations;
     private EvaluationFunction evaluationFunction;
 
-    public Minimax(BoardOperations boardOperations, EvaluationFunction evaluationFunction) {
+    public AlphaBetaMinimax(BoardOperations boardOperations, EvaluationFunction evaluationFunction) {
         this.boardOperations = boardOperations;
         this.evaluationFunction = evaluationFunction;
     }
@@ -57,9 +57,9 @@ public class Minimax implements SearchStrategy {
 
             //compute minimax at child board who is min player; self board alternates at child board
             if (turn % 2 == 0) {
-                value = minimax(childBoard[1], childBoard[0], searchDepth - 1, false, turn + 1);
+                value = alphaBetaMinimax(childBoard[1], childBoard[0], searchDepth - 1, false, turn + 1,NEG_INFINITY_INIT,POS_INFINITY_INIT);
             } else {
-                value = minimax(childBoard[0], childBoard[1], searchDepth - 1, false, turn + 1);
+                value = alphaBetaMinimax(childBoard[0], childBoard[1], searchDepth - 1, false, turn + 1,NEG_INFINITY_INIT,POS_INFINITY_INIT);
             }
 
 
@@ -79,12 +79,12 @@ public class Minimax implements SearchStrategy {
     }
 
     /**
-     * main.Minimax search implementation using chosen evaluation function.
+     * AlphaBetaMinimax search implementation using chosen evaluation function.
      *
      * @return evaluation value of current node
      */
 
-    public int minimax(long bbSelf, long bbEnemy, int depth, boolean maxPlayer, int turn) {
+    public int alphaBetaMinimax(long bbSelf, long bbEnemy, int depth, boolean maxPlayer, int turn, int alpha, int beta) {
 
         //handle maximum tree depth
         if (depth == 0) {
@@ -119,7 +119,7 @@ public class Minimax implements SearchStrategy {
                     }
                 }
             } else {    //pass turn - continues minimax with unchanged board
-                return minimax(bbEnemy, bbSelf, depth - 1, !maxPlayer, turn + 1); //TODO parentPassed = true
+                return alphaBetaMinimax(bbEnemy, bbSelf, depth - 1, !maxPlayer, turn + 1, alpha, beta); //TODO parentPassed = true
             }
         }
 
@@ -129,15 +129,25 @@ public class Minimax implements SearchStrategy {
         if (maxPlayer) {
             int bestValue = NEG_INFINITY_INIT;
             for (long[] childBoard : childBoardList) {
-                int value = minimax(childBoard[enemyBBIndex], childBoard[selfBBIndex], depth - 1, false, turn + 1); //TODO parentPassed
+                int value = alphaBetaMinimax(childBoard[enemyBBIndex], childBoard[selfBBIndex], depth - 1, false, turn + 1, alpha, beta); //TODO parentPassed
                 bestValue = Math.max(bestValue, value);
+
+                alpha = Math.max(alpha, bestValue);
+                if(beta <= alpha) {
+                    break; //beta cut-off
+                }
             }
             return bestValue;
         } else {    //minPlayer
             int bestValue = POS_INFINITY_INIT;
             for (long[] childBoard : childBoardList) {
-                int value = minimax(childBoard[enemyBBIndex], childBoard[selfBBIndex], depth - 1, true, turn + 1); //TODO parentPassed = false
+                int value = alphaBetaMinimax(childBoard[enemyBBIndex], childBoard[selfBBIndex], depth - 1, true, turn + 1, alpha, beta); //TODO parentPassed = false
                 bestValue = Math.min(bestValue, value);
+
+                beta = Math.min(beta, bestValue);
+                if(beta <= alpha) {
+                    break; //alpha cut-off
+                }
             }
             return bestValue;
         }
