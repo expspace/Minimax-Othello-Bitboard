@@ -16,7 +16,7 @@ public class MobilityEvaluator implements EvaluationFunction{
      */
 
     @Override
-    public int evaluateBoard(long bbSelf, long bbEnemy) {
+    public int evaluateBoard(long bbSelf, long bbEnemy, int turn) {
         return Long.bitCount(bbOps.generateMoves(bbSelf, bbEnemy)) - Long.bitCount(bbOps.generateMoves(bbEnemy, bbSelf));
     }
 }

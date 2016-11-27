@@ -9,7 +9,7 @@ public class RandomEvaluator implements EvaluationFunction {
     Random rand = new Random();
 
     @Override
-    public int evaluateBoard(long bbSelf, long bbEnemy) {
+    public int evaluateBoard(long bbSelf, long bbEnemy, int turn) {
         return rand.nextInt(100);
     }
 }

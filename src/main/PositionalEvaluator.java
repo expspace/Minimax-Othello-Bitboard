@@ -60,7 +60,7 @@ public class PositionalEvaluator implements EvaluationFunction{
      */
 
     @Override
-    public int evaluateBoard(long bbSelf, long bbEnemy) {
+    public int evaluateBoard(long bbSelf, long bbEnemy, int turn) {
         int totalValue = 0;
         for(int i = 0; i < SQUARE_LIST.length; i++) {
             //add self squares
