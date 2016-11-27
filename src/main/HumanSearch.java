@@ -7,6 +7,7 @@ import java.util.Scanner;
  */
 public class HumanSearch implements SearchStrategy {
     private BoardOperations boardOperations;
+
     private Scanner kb = new Scanner(System.in);
 
     public HumanSearch(BoardOperations boardOperations) {
@@ -40,12 +41,19 @@ public class HumanSearch implements SearchStrategy {
         int rowChoice;
         int colChoice;
         do {
-            System.out.print("Enter row and column index \"row,col\" : ");
+            System.out.print("Enter column and row index \"col,row\" : ");
             String input = kb.nextLine();
             String[] parts = input.split(",");
 
-            rowChoice = Integer.parseInt(parts[0]);
-            colChoice = Integer.parseInt(parts[1]);
+            try{
+                colChoice = Integer.parseInt(parts[0]);
+                rowChoice = Integer.parseInt(parts[1]);
+            }catch (Exception error)
+            {
+                //we catch every wrong inputs that could'nt be parsed by our rules
+                rowChoice = -1;
+                colChoice = -1;
+            }
 
         } while(!isValidInput(rowChoice,colChoice));
 
@@ -55,7 +63,8 @@ public class HumanSearch implements SearchStrategy {
     }
 
     public long rowColToBBArray(int row, int col) {
-        int bbIndex = 8 * (8 - row) + (8 - col); //convert row/col to bitboard index
+
+        int bbIndex = 64 - (col+(row*8-8)); ///convert row/col to bitboard index
         long move = 1L << bbIndex;
         return move;
     }
@@ -71,4 +80,5 @@ public class HumanSearch implements SearchStrategy {
         }
         return valid;
     }
+
 }
