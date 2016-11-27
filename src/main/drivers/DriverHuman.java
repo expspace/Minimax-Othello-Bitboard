@@ -16,8 +16,8 @@ public class DriverHuman {
         Scanner kb = new Scanner(System.in);
 
         long[] bitboards = {
-                0b00000000_00000000_00000000_00010000_00001000_00000000_00000000_00000000L, //initial black stones
-                0b00000000_00000000_00000000_00001000_00010000_00000000_00000000_00000000L //initial white stones
+                0b00000000_00000000_00000000_00001000_00010000_00000000_00000000_00000000L, //initial white stones
+                0b00000000_00000000_00000000_00010000_00001000_00000000_00000000_00000000L //initial black stones
         };
 
         int turn = 0;
@@ -42,6 +42,7 @@ public class DriverHuman {
                 long moves = bbOps.generateMoves(bitboards[0], bitboards[1]);
                 numMovesPOne = Long.bitCount(moves);
                 System.out.println("NUM MOVES: " + numMovesPOne);
+                BitboardHelper.printAvailableMoves(moves);
                 System.out.println("CHOOSES MOVE: ");
                 bitboards = humanSearch.performNextMove(bitboards[0], bitboards[1],turn);
                 BitboardHelper.bbPrintForHumans(bitboards[0], bitboards[1]);

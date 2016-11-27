@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -110,5 +111,47 @@ public class BitboardHelper {
         //loop through stringlist add convert to bits
     }
 
-    //TODO adapter/converter for input (array index to bitboard)
+    public static boolean isAvailableMove(int index, long bitBoard) {
+        if ((bitBoard & (1L << index)) != 0L) {
+            return true;
+        }
+        //empty space
+        return false;
+    }
+
+    /**
+     * Display available position
+     *
+     *  (x,y)
+     *
+     * @param bitBoard
+     */
+    public static void printAvailableMoves(long bitBoard)
+    {
+        List<Integer> availableMoveIndex = new ArrayList<>();
+
+        //find all move position
+        for (int i = 64; i >= 0; i--) {
+            if (isAvailableMove(i, bitBoard)) {
+                availableMoveIndex.add(i);
+            }
+
+        }
+        for(int index : availableMoveIndex)
+        {
+            for(int i =1; i <8;i++)
+            {
+                for(int j=1; j <=8 ;j++)
+                {
+                    int result = 64 - (i+(j*8-8));
+                    if(index == result)
+                    {
+                        System.out.print("("+i+","+j+") ");
+                    }
+                }
+            }
+
+        }
+        System.out.println();
+    }
 }
