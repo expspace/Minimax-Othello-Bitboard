@@ -23,16 +23,13 @@ public class DriverPositional {
 
         BoardOperations boardOperations = new BoardOperations();
 
-        EvaluationFunction positionalEvaluator = new FrontiersEvaluator();
         EvaluationFunction positionalEvaluator2 = new FrontierEvaluator(boardOperations);
 
         int turn = 0 ; // turn for testing
 
         //int posEvaluationVal = positionalEvaluator.evaluateBoard(bitboards[1],bitboards[0]);
-        int posEvaluationVal_test = positionalEvaluator.evaluateBoard(bitboards[1],bitboards[0], turn);
         int posEvaluationVal_test2 = positionalEvaluator2.evaluateBoard(bitboards[1],bitboards[0], turn);
 
-        System.out.println(posEvaluationVal_test); //assert 4
         System.out.println(posEvaluationVal_test2); //assert 4
 
     }
