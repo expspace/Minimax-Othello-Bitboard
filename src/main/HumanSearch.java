@@ -29,6 +29,14 @@ public class HumanSearch implements SearchStrategy {
             return new long[] {bbSelf,bbEnemy};
         }
 
+        System.out.println("NUM MOVES: " + Long.bitCount(legalMoves));
+        System.out.println("LEGAL MOVES: ");
+        if(turn % 2 == 0) {
+            BitboardHelper.bbPrintForHumans(legalMoves,0);
+        } else {
+            BitboardHelper.bbPrintForHumans(0,legalMoves);
+        }
+
         do {
             chosenMove = promptMove();  //gets player move checks valid input
             moveBitboard = rowColToBBArray(chosenMove[0],chosenMove[1]);

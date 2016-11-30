@@ -13,7 +13,7 @@ public class DriverGame {
         /** PLAYER 1 (BLACK) **/
 
         //greedy search
-        Player p1 = new Player(new GreedyAlgorithm(bbOps));
+//        Player p1 = new Player(new GreedyAlgorithm(bbOps));
 
         //minimax
 //        Player p1 = new Player(new Minimax(bbOps,new RandomEvaluator()));
@@ -32,13 +32,13 @@ public class DriverGame {
 //        Player p1 = new Player(new AlphaBetaMinimax(bbOps,new CombinationTurnEvaluator(bbOps)));
 //
         //human player
-//        Player p1 = new Player(new HumanSearch(bbOps));
+        Player p1 = new Player(new HumanSearch(bbOps));
 
 
         /** PLAYER 2 (WHITE) **/
 
         //greedy search
-//        Player p2 = new Player(new GreedyAlgorithm(bbOps));
+        Player p2 = new Player(new GreedyAlgorithm(bbOps));
 
         //minimax
 //        Player p2 = new Player(new Minimax(bbOps,new RandomEvaluator()));
@@ -51,7 +51,7 @@ public class DriverGame {
         //alpha-beta-minimax
 //        Player p2 = new Player(new AlphaBetaMinimax(bbOps,new RandomEvaluator()));
 //        Player p2 = new Player(new AlphaBetaMinimax(bbOps,new PositionalEvaluator()));
-        Player p2 = new Player(new AlphaBetaMinimax(bbOps,new MobilityEvaluator(bbOps)));
+//        Player p2 = new Player(new AlphaBetaMinimax(bbOps,new MobilityEvaluator(bbOps)));
 //        Player p2 = new Player(new AlphaBetaMinimax(bbOps,new FrontierEvaluator(bbOps)));
 //        Player p2 = new Player(new AlphaBetaMinimax(bbOps,new CombinationEvaluator(bbOps)));
 //        Player p2 = new Player(new AlphaBetaMinimax(bbOps,new CombinationTurnEvaluator(bbOps)));
