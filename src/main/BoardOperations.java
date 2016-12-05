@@ -164,7 +164,7 @@ public class BoardOperations {
         for (int i = 0; i < 5; i++) {
             captured |= shiftN(captured) & bbEnemy;
         }
-        if ((shiftN(captured) & bbSelf) > 0) {
+        if ((shiftN(captured) & bbSelf) != 0) {
             bbSelf |= captured;
             bbEnemy &= ~captured;
         }
@@ -174,7 +174,7 @@ public class BoardOperations {
         for (int i = 0; i < 5; i++) {
             captured |= shiftS(captured) & bbEnemy;
         }
-        if ((shiftS(captured) & bbSelf) > 0) {
+        if ((shiftS(captured) & bbSelf) != 0) {
             bbSelf |= captured;
             bbEnemy &= ~captured;
         }
@@ -184,7 +184,7 @@ public class BoardOperations {
         for (int i = 0; i < 5; i++) {
             captured |= shiftW(captured) & bbEnemy;
         }
-        if ((shiftW(captured) & bbSelf) > 0) {
+        if ((shiftW(captured) & bbSelf) != 0) {
             bbSelf |= captured;
             bbEnemy &= ~captured;
         }
@@ -194,7 +194,7 @@ public class BoardOperations {
         for (int i = 0; i < 5; i++) {
             captured |= shiftE(captured) & bbEnemy;
         }
-        if ((shiftE(captured) & bbSelf) > 0) {
+        if ((shiftE(captured) & bbSelf) != 0) {
             bbSelf |= captured;
             bbEnemy &= ~captured;
         }
@@ -204,7 +204,7 @@ public class BoardOperations {
         for (int i = 0; i < 5; i++) {
             captured |= shiftNW(captured) & bbEnemy;
         }
-        if ((shiftNW(captured) & bbSelf) > 0) {
+        if ((shiftNW(captured) & bbSelf) != 0) {
             bbSelf |= captured;
             bbEnemy &= ~captured;
         }
@@ -214,7 +214,7 @@ public class BoardOperations {
         for (int i = 0; i < 5; i++) {
             captured |= shiftNE(captured) & bbEnemy;
         }
-        if ((shiftNE(captured) & bbSelf) > 0) {
+        if ((shiftNE(captured) & bbSelf) != 0) {
             bbSelf |= captured;
             bbEnemy &= ~captured;
         }
@@ -224,7 +224,7 @@ public class BoardOperations {
         for (int i = 0; i < 5; i++) {
             captured |= shiftSW(captured) & bbEnemy;
         }
-        if ((shiftSW(captured) & bbSelf) > 0) {
+        if ((shiftSW(captured) & bbSelf) != 0) {
             bbSelf |= captured;
             bbEnemy &= ~captured;
         }
@@ -234,7 +234,7 @@ public class BoardOperations {
         for (int i = 0; i < 5; i++) {
             captured |= shiftSE(captured) & bbEnemy;
         }
-        if ((shiftSE(captured) & bbSelf) > 0) {
+        if ((shiftSE(captured) & bbSelf) != 0) {
             bbSelf |= captured;
             bbEnemy &= ~captured;
         }
