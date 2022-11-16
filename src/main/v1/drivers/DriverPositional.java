@@ -1,8 +1,8 @@
-package main.drivers;
+package main.v1.drivers;
 
-import main.*;
-import main.evaluators.EvaluationFunction;
-import main.evaluators.FrontierEvaluator;
+import main.v1.BoardOperations;
+import main.v1.evaluators.EvaluationFunction;
+import main.v1.evaluators.FrontierEvaluator;
 
 /**
  * Created by NSPACE on 11/20/2016.

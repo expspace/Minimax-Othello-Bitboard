@@ -1,8 +1,9 @@
-package main.drivers;
+package main.v1.drivers;
 
-import main.*;
-import main.evaluators.RandomEvaluator;
-import main.searchstrategy.AlphaBetaMinimax;
+import main.v1.BitboardHelper;
+import main.v1.BoardOperations;
+import main.v1.evaluators.RandomEvaluator;
+import main.v1.searchstrategy.AlphaBetaMinimax;
 
 /**
  * Created by NSPACE on 11/17/2016.

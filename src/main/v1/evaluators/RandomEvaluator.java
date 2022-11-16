@@ -1,6 +1,4 @@
-package main.evaluators;
-
-import main.evaluators.EvaluationFunction;
+package main.v1.evaluators;
 
 import java.util.Random;
 

@@ -1,8 +1,7 @@
-package main.searchstrategy;
+package main.v1.searchstrategy;
 
-import main.BoardOperations;
-import main.evaluators.EvaluationFunction;
-import main.searchstrategy.SearchStrategy;
+import main.v1.BoardOperations;
+import main.v1.evaluators.EvaluationFunction;
 
 import java.util.ArrayList;
 
@@ -69,7 +68,7 @@ public class Minimax implements SearchStrategy {
 
 //            System.out.println("CHILD BOARD: ");
 //            System.out.println("child board minimax value: " + value);
-//            main.BitboardHelper.bbPrint(childBoard[0],childBoard[1]);
+//            main.v1.BitboardHelper.bbPrint(childBoard[0],childBoard[1]);
 
 //            System.out.println("value, max value :"  + value + " " + maxValue);
             if (value > maxValue) {
@@ -83,7 +82,7 @@ public class Minimax implements SearchStrategy {
     }
 
     /**
-     * main.searchstrategy.Minimax search implementation using chosen evaluation function.
+     * main.v1.searchstrategy.Minimax search implementation using chosen evaluation function.
      *
      * @return evaluation value of current node
      */

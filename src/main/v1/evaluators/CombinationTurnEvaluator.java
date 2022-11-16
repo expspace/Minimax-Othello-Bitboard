@@ -1,6 +1,6 @@
-package main.evaluators;
+package main.v1.evaluators;
 
-import main.BoardOperations;
+import main.v1.BoardOperations;
 
 /**
  * Created by michal wozniak on 11/27/2016.

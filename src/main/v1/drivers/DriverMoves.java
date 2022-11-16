@@ -1,7 +1,7 @@
-package main.drivers;
+package main.v1.drivers;
 
-import main.BitboardHelper;
-import main.BoardOperations;
+import main.v1.BitboardHelper;
+import main.v1.BoardOperations;
 
 /**
  * Created by NSPACE on 11/17/2016.
@@ -82,7 +82,7 @@ public class DriverMoves {
 //        bitboards = bbOps.makeMove(moveThree, bitboards[0], bitboards[1],turn);
 //        turn++;
 //
-//        main.BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
+//        main.v1.BitboardHelper.bbPrint(bitboards[0], bitboards[1]);
 
 
 

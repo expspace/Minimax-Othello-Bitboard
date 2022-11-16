@@ -1,6 +1,6 @@
-package main;
+package main.v1;
 
-import main.searchstrategy.SearchStrategy;
+import main.v1.searchstrategy.SearchStrategy;
 
 /**
  * Created by NSPACE on 11/22/2016.

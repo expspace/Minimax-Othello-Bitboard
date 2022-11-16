@@ -1,9 +1,11 @@
-package main.drivers;
+package main.v1.drivers;
 
 
-import main.*;
-import main.searchstrategy.GreedyAlgorithm;
-import main.searchstrategy.HumanSearch;
+import main.v1.BoardOperations;
+import main.v1.OthelloGame;
+import main.v1.Player;
+import main.v1.searchstrategy.GreedyAlgorithm;
+import main.v1.searchstrategy.HumanSearch;
 
 /**
  * Created by NSPACE on 11/22/2016.

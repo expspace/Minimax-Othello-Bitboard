@@ -1,7 +1,6 @@
-package main.searchstrategy;
+package main.v1.searchstrategy;
 
-import main.BoardOperations;
-import main.searchstrategy.SearchStrategy;
+import main.v1.BoardOperations;
 
 import java.util.ArrayList;
 

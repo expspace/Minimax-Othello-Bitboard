@@ -1,9 +1,9 @@
-package main.drivers;
+package main.v1.drivers;
 
-import main.BitboardHelper;
-import main.BoardOperations;
-import main.searchstrategy.GreedyAlgorithm;
-import main.searchstrategy.HumanSearch;
+import main.v1.BitboardHelper;
+import main.v1.BoardOperations;
+import main.v1.searchstrategy.GreedyAlgorithm;
+import main.v1.searchstrategy.HumanSearch;
 
 import java.util.Scanner;
 
