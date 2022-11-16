@@ -2,6 +2,8 @@ package main.drivers;
 
 
 import main.*;
+import main.searchstrategy.GreedyAlgorithm;
+import main.searchstrategy.HumanSearch;
 
 /**
  * Created by NSPACE on 11/22/2016.

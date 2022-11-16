@@ -1,5 +1,7 @@
 package main;
 
+import main.searchstrategy.SearchStrategy;
+
 /**
  * Created by NSPACE on 11/22/2016.
  */

@@ -1,9 +1,11 @@
-package main;
+package main.evaluators;
+
+import main.BoardOperations;
 
 /**
  * Created by michal wozniak on 11/27/2016.
  */
-public class CombinationTurnEvaluator implements EvaluationFunction{
+public class CombinationTurnEvaluator implements EvaluationFunction {
 
     private MobilityEvaluator mobilityEvaluator;
     private PositionalEvaluator positionalEvaluator;

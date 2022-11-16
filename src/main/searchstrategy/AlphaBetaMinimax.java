@@ -1,4 +1,8 @@
-package main;
+package main.searchstrategy;
+
+import main.BoardOperations;
+import main.evaluators.EvaluationFunction;
+import main.searchstrategy.SearchStrategy;
 
 import java.util.ArrayList;
 

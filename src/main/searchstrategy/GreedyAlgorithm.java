@@ -1,4 +1,7 @@
-package main;
+package main.searchstrategy;
+
+import main.BoardOperations;
+import main.searchstrategy.SearchStrategy;
 
 import java.util.ArrayList;
 

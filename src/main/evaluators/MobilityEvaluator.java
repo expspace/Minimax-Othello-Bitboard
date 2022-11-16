@@ -1,9 +1,12 @@
-package main;
+package main.evaluators;
+
+import main.BoardOperations;
+import main.evaluators.EvaluationFunction;
 
 /**
  * Created by NSPACE on 11/20/2016.
  */
-public class MobilityEvaluator implements EvaluationFunction{
+public class MobilityEvaluator implements EvaluationFunction {
     BoardOperations bbOps;
 
     public MobilityEvaluator(BoardOperations bbOps) {

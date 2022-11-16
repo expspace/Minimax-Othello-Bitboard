@@ -1,6 +1,8 @@
 package main.drivers;
 
 import main.*;
+import main.evaluators.EvaluationFunction;
+import main.evaluators.FrontierEvaluator;
 
 /**
  * Created by NSPACE on 11/20/2016.

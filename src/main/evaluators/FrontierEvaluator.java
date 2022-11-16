@@ -1,4 +1,7 @@
-package main;
+package main.evaluators;
+
+import main.BoardOperations;
+import main.evaluators.EvaluationFunction;
 
 /**
  * Created by NSPACE on 11/23/2016.

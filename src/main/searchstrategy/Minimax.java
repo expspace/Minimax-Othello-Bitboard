@@ -1,4 +1,8 @@
-package main;
+package main.searchstrategy;
+
+import main.BoardOperations;
+import main.evaluators.EvaluationFunction;
+import main.searchstrategy.SearchStrategy;
 
 import java.util.ArrayList;
 
@@ -79,7 +83,7 @@ public class Minimax implements SearchStrategy {
     }
 
     /**
-     * main.Minimax search implementation using chosen evaluation function.
+     * main.searchstrategy.Minimax search implementation using chosen evaluation function.
      *
      * @return evaluation value of current node
      */

@@ -1,4 +1,4 @@
-package main;
+package main.evaluators;
 
 /**
  * Created by NSPACE on 11/20/2016.

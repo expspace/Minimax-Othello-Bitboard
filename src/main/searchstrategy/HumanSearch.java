@@ -1,4 +1,8 @@
-package main;
+package main.searchstrategy;
+
+import main.BitboardHelper;
+import main.BoardOperations;
+import main.searchstrategy.SearchStrategy;
 
 import java.util.Scanner;
 

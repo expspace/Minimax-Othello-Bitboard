@@ -1,4 +1,4 @@
-package main;
+package main.searchstrategy;
 
 /**
  * Created by NSPACE on 11/22/2016.

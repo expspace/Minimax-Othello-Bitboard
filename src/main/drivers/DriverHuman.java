@@ -2,8 +2,8 @@ package main.drivers;
 
 import main.BitboardHelper;
 import main.BoardOperations;
-import main.GreedyAlgorithm;
-import main.HumanSearch;
+import main.searchstrategy.GreedyAlgorithm;
+import main.searchstrategy.HumanSearch;
 
 import java.util.Scanner;
 
